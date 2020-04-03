@@ -55,7 +55,15 @@
 									echo "\t<th>" . $key . "</th>\n"; // create a table cell with the field name
 									foreach ($values as $cell) // for every sub-array iterate through all values
 									{
-										echo "\t<th class='text-center'>" . konversiBulanAngkaKeNama_short($cell) . "</th>\n"; // write cells next to each other
+										echo "\t<th class='text-center'>" . konversiBulanAngkaKeNama_short($cell) . "  </th>\n"; // write cells next to each other
+									}
+									echo "</tr>\n"; // end row
+								} elseif ($i == 2) { 
+									echo "<tr>\n"; // start the row
+									echo "\t<td> Hapus Data</td>\n"; // create a table cell with the field name
+									foreach ($values as $cell) // for every sub-array iterate through all values
+									{
+										echo "\t<th class='text-center'><a title='Hapus' class='delete btn btn-sm btn-danger' data-toggle='modal' data-target='#confirm-delete' data-href='".base_url('kinerja/individu/hapus_din/'. $cell)."'> <i class='fa fa-trash-o'></i></a> </th>\n"; // write cells next to each other
 									}
 									echo "</tr>\n"; // end row
 								} else {
@@ -209,4 +217,32 @@
   		lineChart.Line(areaChartData_din, lineChartOptions);
 
   	});
+  </script>
+
+  <!-- Modal -->
+<div id="confirm-delete" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Hapus</h4>
+      </div>
+      <div class="modal-body">
+        <p>Anda yakin ingin menghapus data ini?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+        <a class="btn btn-danger btn-ok">Hapus</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script type="text/javascript">
+      $('#confirm-delete').on('show.bs.modal', function(e) {
+      $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    });
   </script>

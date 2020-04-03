@@ -95,9 +95,9 @@
             }?>
             
         </div>-->
-        <!-- /.box-body -->
+        <!-- /.box-body 
       </div>
-    </div>
+    </div>-->
   </div>
   <!-- /.box -->
 </section>  

@@ -2,7 +2,12 @@
   		<div class="col-md-9">
   			<div class="box box-body">
 
-  				<h4><i class="fa fa-gear"></i> &nbsp; Hifdz Al Mal / Penjagaan Harta</h4>
+				  <h4><i class="fa fa-gear"></i> &nbsp; Hifdz Al Mal / Penjagaan Harta
+				  <?php if($this->session->userdata('role')== 3) { ?>
+				  <a title="Edit" class="delete btn btn-sm btn-success pull-right" href="<?php echo base_url('kinerja/individu/mal'); ?>"> <i class="fa fa-plus"></i>
+  						Tambah Data</a>
+  					<?php } ?>
+				</h4>
   				<hr>
   				<select id="select_menu" class="form-control">
   					<option value="#">Pilih Kinerja</option>

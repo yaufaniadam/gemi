@@ -4,15 +4,17 @@
 			<div class="box box-body with-border">
 				<div class="col-md-6">
 					<h4><i class="fa fa-user"></i> &nbsp; Kinerja Individu</h4>
-        </div>
-        <div  class="col-md-6">
-          <a href="<?=base_url('kinerja/individu/detail_mal'); ?>" class="btn btn-success btn-md pull-right">Lihat Data</a>
-      </div>
+				</div>
+				<div class="col-md-6">
+					<a href="<?=base_url('kinerja/individu/detail_nasl'); ?>" class="btn btn-success btn-md pull-right">Lihat
+						Data</a>
+				</div>
 			</div>
 
 			<div class="box">
 				<div class="box-header with-border">
-					<h4>Hifdz Al-Maal (Pemeliharaan Harta) </h4>
+					<h4>Hifdz Al-Maal (Pemeliharaan Harta) <a href="" class="btn btn-default btn-sm pull-right">Lihat periode
+							lainnya</a> </h4>
 
 				</div>
 				<!-- /.box-header -->
@@ -54,7 +56,6 @@
 							</div>
 						</div>
 					</div>
-
 
 					<div class="form-group">
 						<label for="saving" class="col-sm-6 control-label">Jumlah saving untuk pendidikan anak</label>
@@ -109,5 +110,5 @@
 
 <script>
 	$("#kinerja_individu").addClass('active');
-	$("#kinerja_individu .submenu_mal").addClass('active'); 
+	$("#kinerja_individu .submenu_nasl").addClass('active'); 
 </script>

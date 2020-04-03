@@ -29,13 +29,20 @@
 	<body class="skin-yellow">
 
 		<div class="wrapper" style="height: auto;">
-			<?php if($this->session->flashdata('msg') != ''): ?>
-			    <div class="alert alert-warning flash-msg alert-dismissible">
+			<?php if($this->session->flashdata('msg') != '') { ?>
+			    <div class="alert alert-success flash-msg alert-dismissible">
 			      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-			      <h4> Success!</h4>
+			      <h4> Sukses!</h4>
 			      <?= $this->session->flashdata('msg'); ?> 
 			    </div>
-			<?php endif; ?>
+			<?php } elseif($this->session->flashdata('error') != '') { ?>
+				<div class="alert alert-danger flash-msg alert-dismissible">
+			      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			      <h4> Terjadi Kesalahan!</h4>
+			      <?= $this->session->flashdata('error'); ?> 
+			    </div>
+
+			<?php }  ?>
 
 			<section id="container">
 				<!--header start-->

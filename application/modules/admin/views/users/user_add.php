@@ -34,6 +34,7 @@
 
                 <div class="col-sm-9">
                   <input type="text" name="username" class="form-control" id="username" placeholder="">
+                  <span>Tanpa spasi, maksimum 15 huruf.</span>
                 </div>
               </div>
               

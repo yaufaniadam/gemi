@@ -14,7 +14,7 @@ class Individu_model extends CI_Model
 
 	public function get_individu_din($id = 0, $tahun = 0)
 	{
-		$query = $this->db->query('select periode_bln as Bulan, 
+		$query = $this->db->query('select periode_bln as Bulan,id, 
 			 	sholat_awal_waktu as "Frekuensi melaksanakan shalat wajib berjamaah di awal waktu (kali/bln)",
 			 	jamaah_masjid as "Frekuensi shalat berjamaah di masjid (kali/bln)",
 			 	tilawah_quran as "Jumlah halaman tilawah qur’an (lembar/bln)",
@@ -81,29 +81,22 @@ class Individu_model extends CI_Model
 
 	public function add_individu_aql($data)
 	{
-
-		$id = $this->session->userdata('user_id');
-		$query = $this->db->get_where('ci_individu_aql', array('user_id' => $id));
-
-		if ($query->row_array()) {
-			$this->db->update('ci_individu_aql', $data);
-		} else {
-			$this->db->insert('ci_individu_aql', $data);
-		}
-
+		
+		$this->db->insert('ci_individu_aql', $data);
+	
 		return true;
 	}
 
 	public function get_individu_aql($id = 0, $tahun = 0, $jenis_kegiatan)
 	{
 		$query = $this->db->query('select *			 
-			 	from ci_individu_aql where user_id=' . $id . ' and periode_thn=' . $tahun . '  and jenis_kegiatan="'.$jenis_kegiatan.'" order by periode_bln ASC');
+			 	from ci_individu_aql where user_id=' . $id . ' and YEAR(date)=' . $tahun . '  and jenis_kegiatan="'.$jenis_kegiatan.'" order by periode_bln ASC');
 		return $query->result_array();
 	}
 
 	public function get_individu_aql_grafik_tahun($id)
 	{
-		$query = $this->db->query('select periode_thn from ci_individu_aql where user_id=' . $id . ' group by periode_thn order by periode_thn  ASC ');
+		$query = $this->db->query('select YEAR(date) as periode_thn from ci_individu_aql where user_id=' . $id . ' group by periode_thn order by periode_thn  ASC ');
 		return $result = $query->result_array();
 	}
 

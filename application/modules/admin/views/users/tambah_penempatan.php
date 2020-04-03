@@ -156,11 +156,12 @@
 
     //Date picker
     $('#awal_penempatan').datepicker({
-      autoclose: true
+      autoclose: true,
+      format: 'yyyy-mm-dd',
     });
     //Date picker
     $('#akhir_penempatan').datepicker({
       autoclose: true,
-      
+      format: 'yyyy-mm-dd',      
     });
   </script>

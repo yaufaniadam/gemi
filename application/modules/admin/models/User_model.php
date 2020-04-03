@@ -292,4 +292,13 @@
 			$this->db->update('ci_minat', $data);
 			return true;
 		}
+		public function get_notes_by_userid($user_id){
+			$this->db->select('ci_user_notes.*,ci_users.firstname as user_management, ci_users.photo');
+			$this->db->from('ci_user_notes');	
+			$this->db->where('user_id', $user_id);
+			$this->db->join('ci_users', 'ci_user_notes.user_id_mgmt = ci_users.id ', 'left');
+
+			$query = $this->db->get();
+			return $result = $query->result_array();
+		}
 	}

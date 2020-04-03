@@ -27,7 +27,7 @@
           <th>Nama Staf</th>
           <th>Unit kerja</th>
           <th>Kantor</th>
-          <!--<th>Periode Penempatan</th>-->
+          <th>Periode Penempatan</th>
           <th style="width:100px;text-align:center;">Aksi</th>
         
           
@@ -39,7 +39,7 @@
             <td><?=get_stafname_by_id($penempatan['user_id']); ?></td>
             <td><?=get_unit_kerja_by_id($penempatan['id_unit']); ?></td>
             <td><?=get_kantor_by_id($penempatan['id_kantor']); ?></td>
-            <!--<td><?=$penempatan['awal_penempatan']; ?> - <?=$penempatan['akhir_penempatan']; ?></td>-->           
+            <td><?=$penempatan['awal_penempatan']; ?> - <?=$penempatan['akhir_penempatan']; ?></td>         
             <td style="width:100px;text-align:center;">              
               <a title="Hapus" class="delete btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete" data-href="<?php echo base_url('admin/users/hapus_penempatan/' . $penempatan['id']); ?>"> <i class="fa fa-trash-o"></i></a>
               <a title="Edit" class="delete btn btn-sm btn-info" href="<?php echo base_url('admin/users/edit_penempatan/' . $penempatan['id']); ?>"> <i class="fa fa-pencil"></i></a>

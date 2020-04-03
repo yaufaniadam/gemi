@@ -4,8 +4,7 @@
 
   				<h4><i class="fa fa-gear"></i> &nbsp; Hifdz An Nasl / Penjagaan Keturunan
   					<?php if($this->session->userdata('role')== 3) { ?>
-  					<a title="Edit" class="delete btn btn-sm btn-success pull-right" data-toggle="modal"
-  						data-target="#tambah_data" data-href="<?php echo base_url(); ?>"> <i class="fa fa-plus"></i>
+  					<a title="Edit" class="delete btn btn-sm btn-success pull-right" href="<?php echo base_url('kinerja/individu/nasl'); ?>"> <i class="fa fa-plus"></i>
   						Tambah Data</a>
   					<?php } ?>
   				</h4>
