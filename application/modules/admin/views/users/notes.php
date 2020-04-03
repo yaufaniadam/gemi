@@ -9,8 +9,8 @@
 					<h4><i class="fa fa-plus"></i> &nbsp; Catatan & Rekomendasi Tentang Karyawan</h4>
 				</div>
 				<div class="col-md-6 text-right">
-					<a href="<?= base_url('admin/users/tambah_notes'); ?>" class="btn btn-success"><i
-							class="fa fa-list"></i> Tambah Catatan</a>
+					<a href="<?= base_url('admin/users/tambah_notes/'.$user['id']); ?>" class="btn btn-success"><i
+							class="fa fa-plus"></i> Tambah Catatan</a>
 				</div>
 			</div>
 		</div>

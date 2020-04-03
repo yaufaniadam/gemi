@@ -340,11 +340,47 @@ class Users extends Admin_Controller
 	}
 
 	// notes about user
-	public function notes($user_id) {
+	public function notes($user_id=null) {
 		$data['user'] = $this->user_model->get_user_by_id($user_id);
 		$data['notes'] = $this->user_model->get_notes_by_userid($user_id);
 		$data['view'] = 'admin/users/notes';
 
 		$this->load->view('layout', $data);
+	}
+
+	public function tambah_notes($user_id=0) {
+
+		if ($this->input->post('submit')) {
+		
+			$this->form_validation->set_rules('notes', 'Catatan', 'trim|required');
+
+			if ($this->form_validation->run() == FALSE) {
+				$data['user'] = $this->user_model->get_user_by_id($user_id);
+				$data['view'] = 'admin/users/tambah_notes';
+				$this->load->view('layout', $data);
+			} else {
+				
+
+				$data = array(
+					'user_id' => $this->input->post('user_id'),
+					'notes' => $this->input->post('notes'),
+					'user_id_mgmt' => $this->session->userdata('user_id'),
+					
+					'date' =>  date('Y-m-d : h:m:s'),
+				);
+				$data = $this->security->xss_clean($data);
+				$result = $this->user_model->tambah_notes($data);
+
+				if ($result) {
+					$this->session->set_flashdata('msg', 'Data telah ditambahkan');
+					redirect(base_url('admin/users/notes'));
+				}
+			}
+			
+		} else {
+			$data['user'] = $this->user_model->get_user_by_id($user_id);
+			$data['view'] = 'admin/users/tambah_notes';
+			$this->load->view('layout', $data);
+		}
 	}
 }

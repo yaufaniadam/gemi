@@ -301,4 +301,9 @@
 			$query = $this->db->get();
 			return $result = $query->result_array();
 		}
+
+		public function tambah_notes($data){					
+			$this->db->insert('ci_user_notes', $data);
+			return true;
+		}
 	}
