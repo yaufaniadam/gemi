@@ -38,9 +38,7 @@
                    <input type="hidden" value="<?=$user['id']; ?>" name="user_id">
                 </div>
               </div> 
-
-             
-
+              
               <div class="form-group">
                 <div class="col-md-12">
                   <input type="submit" name="submit" value="Tambah SK" class="btn btn-info pull-right">

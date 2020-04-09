@@ -1,30 +1,30 @@
-<?php 
-    $last = $this->uri->total_segments();
-    $current_unit= $this->uri->segment($last-1);
-    $current_kantor = $this->uri->segment($last-2);
-    $kinerja = $this->uri->segment($last);
-?>
+
  <section class="content">
   <div class="row">
     <div class="col-md-12">
       <div class="box box-body">
         <div class="col-md-6">
-          <h4><i class="fa fa-building"></i> &nbsp; Kantor <?= $kantor['kantor'];?></h4>
+          <h4><i class="fa fa-building"></i> &nbsp; Unit Kerja Saya</h4>
         </div>
         <div class="col-md-6 text-right">
-           <a href="<?php echo base_url('admin/unit/lihat_unit/'. $current_kantor . "/".$current_unit."/lihat" ); ?>" class="btn btn-danger btn-sm">Lihat Detail</a>
+           <a href="<?php echo base_url("unitkerja/index" ); ?>" class="btn btn-danger btn-sm">Lihat Detail</a>
         </div>        
       </div>
     </div>
   </div>
-
+  <?php 
+    $last = $this->uri->total_segments();
+    $current_kantor= $this->uri->segment($last-1);
+    $current_unit = $this->uri->segment($last);
+?>
 
   <div class="row">
     <div class="col-md-12">
        <div class="box">
         <div class="box-header with-border">
           <div class="col-md-6">
-            <h4>Unit Kerja <?=get_unit_kerja_by_id($current_unit); ?> </h4>
+            <h4>Unit Kerja <?=$unit['nama_unit']; ?> - Kantor <?= $kantor['kantor'];?></h4>
+        
           </div>
           <div class="col-md-6">
            

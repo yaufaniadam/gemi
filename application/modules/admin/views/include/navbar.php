@@ -18,7 +18,7 @@
 
 				<!-- User Account: style can be found in dropdown.less -->
 				<li class="dropdown user user-menu">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					<a href="<?php echo ($this->session->userdata('role') ==1) ? "#" : base_url('profile');  ?>">
           <?php
               $photo = getUserPhoto($this->session->userdata('user_id'));
               
@@ -34,41 +34,11 @@
 							<?php } ?>
 						<span class="hidden-xs"><?= getUserbyId($this->session->userdata('user_id')); ?></span>
 					</a>
-					<ul class="dropdown-menu">
-						<!-- User image -->
-						<li class="user-header">
-              <?php
-             
-              if ($photo == '') { ?>
-
-							<img class="profile-user-img img-fluid img-circle"
-								src="<?= base_url(); ?>public/dist/img/user1-128x128.jpg" alt="User profile picture">
-
-							<?php } else { ?>
-
-							<img class="profile-user-img img-fluid img-circle" src="<?= base_url($photo); ?>">
-
-							<?php } ?>
-							<p>
-								<?= getUserbyId($this->session->userdata('user_id')); ?>
-							</p>
-						</li>
-						<!-- Menu Body -->
-
-						<!-- Menu Footer-->
-						<li class="user-footer">
-							<div class="pull-right">
-								<a href="<?= site_url('auth/logout'); ?>" class="btn btn-default btn-flat">Sign out</a>
-							</div>
-							<div class="pull-left">
-								<a href="  <?php  echo base_url('profile');  ?>" class="btn btn-default btn-flat">Profil Saya </a>
-							</div>
-						</li>
-					</ul>
+					
 				</li>
 				<!-- Control Sidebar Toggle Button -->
 				<li>
-					<a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+					<a href="<?= site_url('auth/logout'); ?>"><i class="fa fa-sign-out"></i> Logout </a>
 				</li>
 			</ul>
 		</div>

@@ -1,93 +1,31 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-	class Unit extends Admin_Controller {
+	class Unitkerja extends MY_Controller {
 
 		public function __construct(){
 			parent::__construct();
-			$this->load->model('admin/unit_model', 'unit_model');
+			$this->load->model('unitkerja_model', 'unitkerja_model');
 			$this->load->model('admin/user_model', 'user_model');
-			$this->load->model('kinerja/kinerjaunit_model', 'kinerjaunit_model');
+		//	$this->load->model('kinerja/kinerjaunitkerja_model', 'kinerjaunitkerja_model');
 			$this->load->library('datatable'); // loaded my custom serverside datatable library
 		}
 
-		public function index(){
-			$data['all_unit'] =  $this->unit_model->get_all_unit_kerja();
-			$data['title'] = 'Unit Kerja';
-			$data['view'] = 'admin/unit/all_unit';
-			$this->load->view('layout', $data);
-		}	
+		public function index($sub_maqasid= 0){
+			$id = $this->session->userdata('user_id');
+			$data['unitkerja'] =  $this->unitkerja_model->get_unitkerja_byuserid($id);
+			
+			$data['detail_unit'] = $this->unitkerja_model->get_unit_by_kantor($data['unitkerja']['id_kantor'], $data['unitkerja']['id_unit'], $sub_maqasid);
 	
-		public function tambah_unit(){
-			if($this->input->post('submit')){
-				$this->form_validation->set_rules('nama_unit', 'Nama unit', 'trim|required');
-
-				if ($this->form_validation->run() == FALSE) {
-					$data['view'] = 'admin/unit/tambah_unit';
-					$this->load->view('layout', $data);
-				}
-				else{
-					$data = array(
-						'nama_unit' => $this->input->post('nama_unit'),
-						'kode' => 'b',
-						'singkatan' => $this->input->post('singkatan'),
-						'induk' => '0',
-					
-					);
-					$data = $this->security->xss_clean($data);
-					$result = $this->unit_model->add_unit($data);
-					if($result){
-						$this->session->set_flashdata('msg', 'Unit Kerja telah ditambahkan!');
-						redirect(base_url('admin/unit'));
-					}
-				}
-			}
-			else{
-				$data['view'] = 'admin/unit';
-				$this->load->view('layout', $data);
-			}
-			
-		}
-
-		
-
-		public function edit($id = 0){
-			if($this->input->post('submit')){
-				$this->form_validation->set_rules('nama_unit', 'Nama unit', 'trim|required');
-
-			
-					$data = array(
-						'nama_unit' => $this->input->post('nama_unit'),
-						'singkatan' => $this->input->post('singkatan'),
-			
-					);
-					$data = $this->security->xss_clean($data);
-					$result = $this->unit_model->edit_unit($data, $id);
-					if($result){
-						$this->session->set_flashdata('msg', 'Unit telah diperbarui!');
-						redirect(base_url('admin/unit'));
-					}
-				
-			}
-			else{
-				$data['unit'] = $this->unit_model->get_unit_by_id($id,'b');
-				$data['view'] = 'admin/unit/edit';
-				$this->load->view('layout', $data);
-			}
-		}
-
-		
-
-		public function del($id = 0, $uri = NULL){	
-			$this->db->delete('ci_unit_kerja', array('id' => $id));
-			$this->session->set_flashdata('msg', 'Data berhasil dihapus!');
-			redirect(base_url('admin/unit/'));
-		}
+			$data['title'] = 'Unit Kerja Saya';
+			$data['view'] = 'unitkerja';
+			$this->load->view('admin/layout', $data); 
+		}			
 
 		public function kantor() {
 
-			$data['all_kantor'] =  $this->unit_model->get_all_kantor();
+			$data['all_kantor'] =  $this->unitkerja_model->get_all_kantor();
 			$data['title'] = 'Kantor Pusat dan Cabang';
-			$data['view'] = 'admin/unit/all_kantor';
-			$this->load->view('layout', $data);
+			$data['view'] = 'all_kantor';
+			$this->load->view('admin/layout', $data);
 		}
 
 		public function tambah_kantor(){
@@ -97,10 +35,10 @@
 				$this->form_validation->set_rules('telp', 'Telepon', 'trim|required');
 
 				if ($this->form_validation->run() == FALSE) {
-					$data['unit'] = $this->unit_model->get_all_unit_kerja();
+					$data['unit'] = $this->unitkerja_model->get_all_unit_kerja();
 					$data['title'] = "Tambah Kantor Cabang";
-					$data['view'] = 'admin/unit/tambah_kantor';
-					$this->load->view('layout', $data);
+					$data['view'] = 'tambah_kantor';
+					$this->load->view('admin/layout', $data);
 				}
 				else{
 					$data = array(
@@ -111,18 +49,18 @@
 					
 					);
 					$data = $this->security->xss_clean($data);
-					$result = $this->unit_model->add_kantor($data);
+					$result = $this->unitkerja_model->add_kantor($data);
 					if($result){
 						$this->session->set_flashdata('msg', 'Unit Kerja telah ditambahkan!');
-						redirect(base_url('admin/unit/kantor'));
+						redirect(base_url('kantor'));
 					}
 				}
 			}
 			else{
-				$data['unit'] = $this->unit_model->get_all_unit_kerja();
+				$data['unit'] = $this->unitkerja_model->get_all_unit_kerja();
 				$data['title'] = "Tambah Kantor Cabang";
-				$data['view'] = 'admin/unit/tambah_kantor';
-				$this->load->view('layout', $data);
+				$data['view'] = 'tambah_kantor';
+				$this->load->view('admin/layout', $data);
 			}
 			
 		}
@@ -134,10 +72,10 @@
 				$this->form_validation->set_rules('telp', 'Telepon', 'trim|required');
 
 				if ($this->form_validation->run() == FALSE) {
-					$data['unit'] = $this->unit_model->get_all_unit_kerja();
+					$data['unit'] = $this->unitkerja_model->get_all_unit_kerja();
 					$data['title'] = "Ubah Kantor Cabang";
-					$data['view'] = 'admin/unit/edit_kantor';
-					$this->load->view('layout', $data);
+					$data['view'] = 'edit_kantor';
+					$this->load->view('admin/layout', $data);
 				}
 				else{
 					$data = array(
@@ -149,35 +87,35 @@
 					
 					);
 					$data = $this->security->xss_clean($data);
-					$result = $this->unit_model->edit_kantor($data,$id);
+					$result = $this->unitkerja_model->edit_kantor($data,$id);
 					if($result){
 						$this->session->set_flashdata('msg', 'Unit Kerja telah ditambahkan!');
-						redirect(base_url('admin/unit/kantor'));
+						redirect(base_url('kantor'));
 					}
 				}
 			}
 			else{
-				$data['unit'] = $this->unit_model->get_all_unit_kerja();
-				$data['kantor'] = $this->unit_model->get_kantor_by_id($id);
+				$data['unit'] = $this->unitkerja_model->get_all_unit_kerja();
+				$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($id);
 				$data['title'] = "Ubah Kantor Cabang";
-				$data['view'] = 'admin/unit/edit_kantor';
-				$this->load->view('layout', $data);
+				$data['view'] = 'edit_kantor';
+				$this->load->view('admin/layout', $data);
 			}
 			
 		}
 
 		public function detail_kantor($id = 0){
 			$data['penempatan'] = $this->user_model->get_penempatan_by_kantor($id);
-			$data['kantor'] = $this->unit_model->get_kantor_by_id($id);
-			$data['view'] = 'admin/unit/detail_kantor';
-			$this->load->view('layout', $data);
+			$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($id);
+			$data['view'] = 'detail_kantor';
+			$this->load->view('admin/layout', $data);
 		}
 
 		public function detail_unit($kantor = 0 , $id = 0){			
-			$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-			$data['unit'] = $this->unit_model->get_unit_by_id($id);
-			$data['view'] = 'admin/unit/detail_unit';
-			$this->load->view('layout', $data);
+			$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+			$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+			$data['view'] = 'detail_unit';
+			$this->load->view('admin/layout', $data);
 		}
 
 		public function add_hrd($kantor = 0, $id = 0, $maqasid) {
@@ -190,10 +128,10 @@
 				//$this->form_validation->set_rules('telp', 'Telepon', 'trim|required');
 
 				/*if ($this->form_validation->run() == FALSE) {
-					$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-					$data['unit'] = $this->unit_model->get_unit_by_id($id);
-					$data['view'] = 'admin/unit/detail_unit';
-					$this->load->view('layout', $data);
+					$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+					$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+					$data['view'] = 'detail_unit';
+					$this->load->view('admin/layout', $data);
 				}
 				else{ */
 
@@ -206,11 +144,8 @@
 						$config = array(
 								'upload_path' => $upload_path,
 								'allowed_types' => "doc|docx|xls|xlsx|ppt|pptx|odt|rtf|jpg|png|pdf",
-								'overwrite' => FALSE,							
-							
-						);
-
-					
+								'overwrite' => FALSE,								
+						);		
 
 						$this->load->library('upload', $config);
 				         // script upload file pertama
@@ -227,6 +162,7 @@
 							//if ($upload_data) {		
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 
@@ -241,7 +177,6 @@
 								'file_komentar' => $upload_path.'/'.$upload_data2['file_name'],
 								'link_berita' => $this->input->post('link_berita'),	
 								'date' => date('Y-m-d : h:i:s'),
-
 							);
 
 						} else if ($this->input->post('sub_maqasid') == "rekrutmen")  {
@@ -251,6 +186,7 @@
 
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 
@@ -261,7 +197,6 @@
 								'sdm_diterima' => $this->input->post('sdm_diterima'),
 								'file_sdm' => $upload_path.'/'.$file_sdm['file_name'],
 								'date' => date('Y-m-d : h:i:s'),
-
 							);
 						} else if ($this->input->post('sub_maqasid') == "kinerja")  {
 
@@ -270,6 +205,7 @@
 
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 
@@ -284,12 +220,12 @@
 
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 
 								'file_employee_productivity' => $upload_path.'/'.$file_employee_productivity['file_name'],
 								'date' => date('Y-m-d : h:i:s'),
-
 							);
 
 						} else if( $this->input->post('sub_maqasid') == "training") { 
@@ -302,7 +238,8 @@
 						
 							//if ($upload_data) {		
 							$data = array(
-								'id_kantor' => $kantor,	
+								'id_kantor' => $kantor,
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 
@@ -332,6 +269,7 @@
 							//if ($upload_data) {		
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 
@@ -357,6 +295,7 @@
 
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 
@@ -367,16 +306,12 @@
 							);
 
 						}
-
-
-
-
 							
 						$data = $this->security->xss_clean($data);
-						$result = $this->unit_model->add_hrd($data);
+						$result = $this->unitkerja_model->add_hrd($data);
 						if($result){
 							$this->session->set_flashdata('msg', 'Data telah disimpan!');
-							redirect(base_url('admin/unit/detail_unit/'. $kantor. "/". $id));
+							redirect(base_url('unitkerja/index/'. $this->input->post('sub_maqasid')));
 						}
 								
 						//}				
@@ -385,17 +320,15 @@
 
 			}
 			else{
-				$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-				$data['unit'] = $this->unit_model->get_unit_by_id($id);
-				$data['view'] = 'admin/unit/detail_unit';
-				$this->load->view('layout', $data);
+				$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+				$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+				$data['view'] = 'detail_unit';
+				$this->load->view('admin/layout', $data);
 			}
 
 		}
 
-		public function add_teller($kantor = 0, $id = 0, $maqasid) {
-
-			
+		public function add_teller($kantor = 0, $id = 0) {
 
 			if($this->input->post('submit')){
 				//$this->form_validation->set_rules('nama_kantor', 'Nama kantor', 'trim|required');
@@ -403,10 +336,10 @@
 				//$this->form_validation->set_rules('telp', 'Telepon', 'trim|required');
 
 				/*if ($this->form_validation->run() == FALSE) {
-					$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-					$data['unit'] = $this->unit_model->get_unit_by_id($id);
-					$data['view'] = 'admin/unit/detail_unit';
-					$this->load->view('layout', $data);
+					$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+					$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+					$data['view'] = 'detail_unit';
+					$this->load->view('admin/layout', $data);
 				}
 				else{ */
 
@@ -432,9 +365,9 @@
 							//if ($upload_data) {		
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),						
-							
 								'tanggal_kejadian' => $this->input->post('tanggal_kejadian'),		
 								'tanggal_komplain' => $this->input->post('tanggal_komplain'),	
 								'pihak_komplain' => $this->input->post('pihak_komplain'),	
@@ -454,11 +387,10 @@
 
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 
-								'tanggal_rekrutmen' => $this->input->post('tanggal_rekrutmen'),
-				
 								'file_kecepatan_kerja' => $upload_path.'/'.$file_kecepatan_kerja['file_name'],
 								'date' => date('Y-m-d : h:i:s'),
 
@@ -470,6 +402,7 @@
 
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 
@@ -480,10 +413,12 @@
 						} 
 
 						$data = $this->security->xss_clean($data);
-						$result = $this->unit_model->add_teller($data);
+						$result = $this->unitkerja_model->add_teller($data);
+
+
 						if($result){
 							$this->session->set_flashdata('msg', 'Data telah disimpan!');
-							redirect(base_url('admin/unit/detail_unit/'. $kantor. "/". $id));
+							redirect(base_url('unitkerja/detail_unit/'. $kantor. "/". $id));
 						}
 								
 						//}				
@@ -492,10 +427,10 @@
 
 			}
 			else{
-				$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-				$data['unit'] = $this->unit_model->get_unit_by_id($id);
-				$data['view'] = 'admin/unit/detail_unit';
-				$this->load->view('layout', $data);
+				$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+				$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+				$data['view'] = 'detail_unit';
+				$this->load->view('admin/layout', $data);
 			}
 
 		}
@@ -510,10 +445,10 @@
 				//$this->form_validation->set_rules('telp', 'Telepon', 'trim|required');
 
 				/*if ($this->form_validation->run() == FALSE) {
-					$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-					$data['unit'] = $this->unit_model->get_unit_by_id($id);
-					$data['view'] = 'admin/unit/detail_unit';
-					$this->load->view('layout', $data);
+					$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+					$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+					$data['view'] = 'detail_unit';
+					$this->load->view('admin/layout', $data);
 				}
 				else{ */
 
@@ -541,6 +476,7 @@
 							//if ($upload_data) {		
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),						
 							
@@ -558,6 +494,7 @@
 
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 								'tanggal' => $this->input->post('tanggal'),
@@ -568,10 +505,10 @@
 						}
 
 						$data = $this->security->xss_clean($data);
-						$result = $this->unit_model->add_akunting($data);
+						$result = $this->unitkerja_model->add_akunting($data);
 						if($result){
 							$this->session->set_flashdata('msg', 'Data telah disimpan!');
-							redirect(base_url('admin/unit/detail_unit/'. $kantor. "/". $id));
+							redirect(base_url('unitkerja/index/'. $this->input->post('sub_maqasid')));
 						}
 								
 						//}				
@@ -580,10 +517,10 @@
 
 			}
 			else{
-				$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-				$data['unit'] = $this->unit_model->get_unit_by_id($id);
-				$data['view'] = 'admin/unit/detail_unit';
-				$this->load->view('layout', $data);
+				$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+				$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+				$data['view'] = 'detail_unit';
+				$this->load->view('admin/layout', $data);
 			}
 
 		}
@@ -598,10 +535,10 @@
 				//$this->form_validation->set_rules('telp', 'Telepon', 'trim|required');
 
 				/*if ($this->form_validation->run() == FALSE) {
-					$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-					$data['unit'] = $this->unit_model->get_unit_by_id($id);
-					$data['view'] = 'admin/unit/detail_unit';
-					$this->load->view('layout', $data);
+					$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+					$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+					$data['view'] = 'detail_unit';
+					$this->load->view('admin/layout', $data);
 				}
 				else{ */
 
@@ -629,6 +566,7 @@
 							//if ($upload_data) {		
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),						
 							
@@ -648,6 +586,7 @@
 
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 								'tanggal' => $this->input->post('tanggal'),
@@ -662,6 +601,7 @@
 
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 								'tanggal' => $this->input->post('tanggal'),
@@ -675,6 +615,7 @@
 							//if ($upload_data) {		
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),						
 							
@@ -693,10 +634,10 @@
 						}
 
 						$data = $this->security->xss_clean($data);
-						$result = $this->unit_model->add_cs($data);
+						$result = $this->unitkerja_model->add_cs($data);
 						if($result){
 							$this->session->set_flashdata('msg', 'Data telah disimpan!');
-							redirect(base_url('admin/unit/detail_unit/'. $kantor. "/". $id));
+							redirect(base_url('unitkerja/index/'. $this->input->post('sub_maqasid')));
 						}
 								
 						//}				
@@ -705,10 +646,10 @@
 
 			}
 			else{
-				$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-				$data['unit'] = $this->unit_model->get_unit_by_id($id);
-				$data['view'] = 'admin/unit/detail_unit';
-				$this->load->view('layout', $data);
+				$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+				$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+				$data['view'] = 'detail_unit';
+				$this->load->view('admin/layout', $data);
 			}
 
 		}
@@ -723,10 +664,10 @@
 				//$this->form_validation->set_rules('telp', 'Telepon', 'trim|required');
 
 				/*if ($this->form_validation->run() == FALSE) {
-					$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-					$data['unit'] = $this->unit_model->get_unit_by_id($id);
-					$data['view'] = 'admin/unit/detail_unit';
-					$this->load->view('layout', $data);
+					$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+					$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+					$data['view'] = 'detail_unit';
+					$this->load->view('admin/layout', $data);
 				}
 				else{ */
 
@@ -752,6 +693,7 @@
 
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 								'tanggal' => $this->input->post('tanggal'),
@@ -765,6 +707,7 @@
 							//if ($upload_data) {		
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),						
 							
@@ -788,6 +731,7 @@
 							//if ($upload_data) {		
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),						
 							
@@ -804,10 +748,10 @@
 						}
 
 						$data = $this->security->xss_clean($data);
-						$result = $this->unit_model->add_pembiayaan($data);
+						$result = $this->unitkerja_model->add_pembiayaan($data);
 						if($result){
 							$this->session->set_flashdata('msg', 'Data telah disimpan!');
-							redirect(base_url('admin/unit/detail_unit/'. $kantor. "/". $id));
+							redirect(base_url('unitkerja/index/'. $this->input->post('sub_maqasid')));
 						}
 								
 						//}				
@@ -816,10 +760,10 @@
 
 			}
 			else{
-				$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-				$data['unit'] = $this->unit_model->get_unit_by_id($id);
-				$data['view'] = 'admin/unit/detail_unit';
-				$this->load->view('layout', $data);
+				$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+				$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+				$data['view'] = 'detail_unit';
+				$this->load->view('admin/layout', $data);
 			}
 
 		}
@@ -833,10 +777,10 @@
 				//$this->form_validation->set_rules('telp', 'Telepon', 'trim|required');
 
 				/*if ($this->form_validation->run() == FALSE) {
-					$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-					$data['unit'] = $this->unit_model->get_unit_by_id($id);
-					$data['view'] = 'admin/unit/detail_unit';
-					$this->load->view('layout', $data);
+					$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+					$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+					$data['view'] = 'detail_unit';
+					$this->load->view('admin/layout', $data);
 				}
 				else{ */
 
@@ -862,6 +806,7 @@
 
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 								'tanggal' => $this->input->post('tanggal'),
@@ -877,6 +822,7 @@
 
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 								'tanggal' => $this->input->post('tanggal'),
@@ -890,7 +836,8 @@
 					        $file_barang_dibeli = $this->upload->data();
 
 							$data = array(
-								'id_kantor' => $kantor,	
+								'id_kantor' => $kantor,
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 								'tanggal' => $this->input->post('tanggal'),
@@ -901,20 +848,20 @@
 						} 
 
 						$data = $this->security->xss_clean($data);
-						$result = $this->unit_model->add_surveyor($data);
+						$result = $this->unitkerja_model->add_surveyor($data);
 						if($result){
 							$this->session->set_flashdata('msg', 'Data telah disimpan!');
-							redirect(base_url('admin/unit/detail_unit/'. $kantor. "/". $id));
+							redirect(base_url('unitkerja/index/'. $this->input->post('sub_maqasid')));
 						}
 								
 						//}						
 
 			}
 			else{
-				$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-				$data['unit'] = $this->unit_model->get_unit_by_id($id);
-				$data['view'] = 'admin/unit/detail_unit';
-				$this->load->view('layout', $data);
+				$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+				$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+				$data['view'] = 'detail_unit';
+				$this->load->view('admin/layout', $data);
 			}
 
 		}
@@ -945,7 +892,8 @@
 					        $file_auditor = $this->upload->data();
 					    
 							$data = array(
-								'id_kantor' => $kantor,	
+								'id_kantor' => $kantor,
+								'id_unit' => $id,	
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 								'nilai_efisiensi' => $this->input->post('nilai_efisiensi'),
@@ -962,6 +910,7 @@
 
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
 								'nilai_standar' => $this->input->post('nilai_standar'),
@@ -978,36 +927,31 @@
 					        $this->upload->do_upload('file_follow_up');
 					        $file_follow_up = $this->upload->data();
 
-
 							$data = array(
 								'id_kantor' => $kantor,	
+								'id_unit' => $id,
 								'maqasid' => $this->input->post('maqasid'),
 								'sub_maqasid' => $this->input->post('sub_maqasid'),	
-
-								'file_follow_up' => $upload_path.'/'.$file_follow_up['file_name'],
-							
-								'file_tindak_lanjut' => $upload_path.'/'.$file_tindak_lanjut['file_name'],
-
+								'file_follow_up' => $upload_path.'/'.$file_follow_up['file_name'],	'file_tindak_lanjut' => $upload_path.'/'.$file_tindak_lanjut['file_name'],
 								'date' => date('Y-m-d : h:i:s'),
-
 							);
 						} 
 
 						$data = $this->security->xss_clean($data);
-						$result = $this->unit_model->add_auditor($data);
+						$result = $this->unitkerja_model->add_auditor($data);
 						if($result){
 							$this->session->set_flashdata('msg', 'Data telah disimpan!');
-							redirect(base_url('admin/unit/detail_unit/'. $kantor. "/". $id));
+							redirect(base_url('unitkerja/index/'. $this->input->post('sub_maqasid')));
 						}
 								
 						//}							
 
 			}
 			else{
-				$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-				$data['unit'] = $this->unit_model->get_unit_by_id($id);
-				$data['view'] = 'admin/unit/detail_unit';
-				$this->load->view('layout', $data);
+				$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+				$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+				$data['view'] = 'detail_unit';
+				$this->load->view('admin/layout', $data);
 			}
 
 		}
@@ -1147,10 +1091,10 @@
 						}
 
 						$data = $this->security->xss_clean($data);
-						$result = $this->unit_model->add_marketing($data);
+						$result = $this->unitkerja_model->add_marketing($data);
 						if($result){
 							$this->session->set_flashdata('msg', 'Data telah disimpan!');
-							redirect(base_url('admin/unit/detail_unit/'. $kantor. "/". $id));
+							redirect(base_url('unitkerja/index/'. $this->input->post('sub_maqasid')));
 						}
 								
 						//}				
@@ -1159,11 +1103,11 @@
 
 			}
 			else{
-				$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-				$data['unit'] = $this->unit_model->get_unit_by_id($id);
-				$data['detail_unit'] = $this->unit_model->get_unit_by_kantor($id,$kantor);
-				$data['view'] = 'admin/unit/detail_unit';
-				$this->load->view('layout', $data);
+				$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+				$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+				$data['detail_unit'] = $this->unitkerja_model->get_unit_by_kantor($id,$kantor);
+				$data['view'] = 'detail_unit';
+				$this->load->view('admin/layout', $data);
 			}
 
 		}
@@ -1268,10 +1212,10 @@
 						}
 
 						$data = $this->security->xss_clean($data);
-						$result = $this->unit_model->add_manager($data);
+						$result = $this->unitkerja_model->add_manager($data);
 						if($result){
 							$this->session->set_flashdata('msg', 'Data telah disimpan!');
-							redirect(base_url('admin/unit/detail_unit/'. $kantor. "/". $id));
+							redirect(base_url('unitkerja/index/'. $this->input->post('sub_maqasid')));
 						}
 								
 						//}				
@@ -1280,11 +1224,11 @@
 
 			}
 			else{
-				$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-				$data['unit'] = $this->unit_model->get_unit_by_id($id);
-				$data['detail_unit'] = $this->unit_model->get_unit_by_kantor($id,$kantor);
-				$data['view'] = 'admin/unit/detail_unit';
-				$this->load->view('layout', $data);
+				$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+				$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+				$data['detail_unit'] = $this->unitkerja_model->get_unit_by_kantor($id,$kantor);
+				$data['view'] = 'detail_unit';
+				$this->load->view('admin/layout', $data);
 			}
 
 		}
@@ -1353,20 +1297,20 @@
 						} 
 
 						$data = $this->security->xss_clean($data);
-						$result = $this->unit_model->add_digimark($data);
+						$result = $this->unitkerja_model->add_digimark($data);
 						if($result){
 							$this->session->set_flashdata('msg', 'Data telah disimpan!');
-							redirect(base_url('admin/unit/detail_unit/'. $kantor. "/". $id));
+							redirect(base_url('unitkerja/index/'. $this->input->post('sub_maqasid')));
 						}
 								
 						//}							
 
 			}
 			else{
-				$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-				$data['unit'] = $this->unit_model->get_unit_by_id($id);
-				$data['view'] = 'admin/unit/detail_unit';
-				$this->load->view('layout', $data);
+				$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+				$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+				$data['view'] = 'detail_unit';
+				$this->load->view('admin/layout', $data);
 			}
 
 		}
@@ -1377,12 +1321,12 @@
 			$data['url_id_unit'] = $id;
 			$data['url_kantor'] = $kantor;
 
-			$data['kantor'] = $this->unit_model->get_kantor_by_id($kantor);
-			$data['unit'] = $this->unit_model->get_unit_by_id($id);
-			$data['detail_unit'] = $this->unit_model->get_unit_by_kantor($kantor, $id, $sub_maqasid);
+			$data['kantor'] = $this->unitkerja_model->get_kantor_by_id($kantor);
+			$data['unit'] = $this->unitkerja_model->get_unit_by_id($id);
+		//	$data['detail_unit'] = $this->unitkerja_model->get_unit_by_kantor($kantor, $id, $sub_maqasid);
 			$data['title'] = 'Unit Kerja';
-			$data['view'] = 'admin/unit/lihat_unit';
-			$this->load->view('layout', $data);
+			$data['view'] = 'lihat_unit';
+			$this->load->view('admin/layout', $data);
 			
 		}	
 	}

@@ -4,7 +4,7 @@
   $current_unit= $this->uri->segment($last-1);
   $current_kantor = $this->uri->segment($last-2);
   $kinerja = $this->uri->segment($last);
-
+  
 ?>
  <section class="content">
   <div class="row">

@@ -13,7 +13,8 @@
   				</div>
   			</div>
   		</div>
-  	</div>
+	  </div>	  
+	
   	<div class="row">
   		<div class="col-md-8">
   			<div class="box">
@@ -44,7 +45,7 @@
   					</div>
 
   					<div class="form-group">
-  						<label for="awal_penempatan" class="col-sm-3 control-label">Periode</label>
+  						<label for="awal_penempatan" class="col-sm-3 control-label">Periode (Bulan/Tanggal/Tahun)</label>
 
   						<div class="col-sm-9">
   							<div class="row">
@@ -54,7 +55,7 @@
   											<i class="fa fa-calendar"></i>
   										</div>
   										<input name="awal_penempatan"
-  											value="<?php echo  (validation_errors()) ? set_value('awal_penempatan') : $penempatan['awal_penempatan'];  ?>"
+  											value="<?php echo  (validation_errors()) ? set_value('awal_penempatan') : $penempatan['awal_penempatan']; ?>"
   											type="text" class="form-control pull-right" id="awal_penempatan">
   									</div>
   								</div>
@@ -66,7 +67,7 @@
   											<i class="fa fa-calendar"></i>
   										</div>
   										<input name="akhir_penempatan"
-  											value="<?php echo  (validation_errors()) ? set_value('akhir_penempatan') : $penempatan['akhir_penempatan'];  ?>"
+  											value="<?php echo  (validation_errors()) ? set_value('akhir_penempatan') :  $penempatan['akhir_penempatan'];  ?>"
   											type="text" class="form-control pull-right" id="akhir_penempatan">
   									</div>
 
@@ -157,7 +158,7 @@
   						<div class="col-sm-9">
   						
   							<input type="file" name="file_sk_penempatan" class="form-control">
-  							<input type="hidden" name="file_sk_penempatan_hidden" class="form-control"
+  							<input type="hidden" name="file_sk_hidden" class="form-control"
   								value="<?=$penempatan['file_sk_penempatan']; ?>">
   						</div>
   					</div>

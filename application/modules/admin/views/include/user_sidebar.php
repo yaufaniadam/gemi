@@ -33,10 +33,10 @@ $cur_tab = $this->uri->segment(2) == '' ? 'dashboard' : $this->uri->segment(2);
 
 				</a>
 				<ul class="treeview-menu">
-				<li class="submenu_kantor"><a href="<?= base_url('admin/unit/detail_kantor/'.$kantor['id_kantor']); ?>"><i
+				<li class="submenu_kantor"><a href="<?= base_url('unitkerja/detail_kantor/'.$kantor['id_kantor']); ?>"><i
 								class="fa fa-circle-o"></i>Profil Kantor</a></li>
 
-					<li class="submenu_din"><a href="<?= base_url('admin/unit/lihat_unit/' . $kantor['id_kantor'] . '/'. $kantor['id_unit']); ?>/lihat"><i class="fa fa-circle-o"></i><?=$kantor['nama_unit']; ?></a></li>				
+					<li class="submenu_din"><a href="<?= base_url("unitkerja/"); ?>"><i class="fa fa-circle-o"></i><?=$kantor['nama_unit']; ?></a></li>				
 				</ul>
 			</li>
 			<?php } ?>

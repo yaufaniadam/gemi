@@ -32,6 +32,8 @@ class Profile extends MY_Controller
 			$this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'trim|required');
 			$this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'trim|required');
 			$this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'trim|required');
+			$this->form_validation->set_rules('status', 'Status Perkawinan', 'trim|required');
+			$this->form_validation->set_rules('agama', 'Agama', 'trim|required');
 			$this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
 			$this->form_validation->set_rules('mobile_no', 'Telepon', 'trim|required');
 			$this->form_validation->set_rules('email', 'E-mail', 'trim|required');
@@ -68,6 +70,8 @@ class Profile extends MY_Controller
 					'tgl_lahir' => $this->input->post('tgl_lahir'),
 					'tempat_lahir' => $this->input->post('tempat_lahir'),
 					'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+					'status' => $this->input->post('status'),
+					'agama' => $this->input->post('agama'),
 					'alamat' => $this->input->post('alamat'),
 					'photo' => ($foto_profil['file_name']) !== "" ? $upload_path . '/' . $foto_profil['file_name'] : $this->input->post('foto_profil_hidden'),
 					'password' => ($this->input->post('password') !== "" ? password_hash($this->input->post('password'), PASSWORD_BCRYPT) : $this->input->post('password_hidden')),

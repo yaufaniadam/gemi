@@ -94,8 +94,8 @@
 							<td><?= $user['jenis_kelamin']; ?></td>
 						</tr>
 						<tr>
-							<td width="200">Tempat/Tgl Lahir</td>
-							<td><?= $user['tempat_lahir']; ?>/<?= $user['tgl_lahir']; ?></td>
+							<td width="200">Tempat / Tgl Lahir</td>
+							<td><?= $user['tempat_lahir']; ?> / <?=date_format(date_create($user['tgl_lahir']), 'j F Y'); ?></td>
 						</tr>
 						<tr>
 							<td width="200">Agama</td>

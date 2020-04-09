@@ -138,6 +138,107 @@
 						</div>
 
 					</div>
+					<div class="form-group">
+						<label for="gender" class="col-sm-2 control-label">Agama</label>
+
+						<div class="col-sm-3">
+							<select name="agama" class="form-control">
+								<option value="" <?php echo set_select('agama', '', TRUE); ?>>Pilih Agama</option>
+								<option value="Islam" <?php if (validation_errors()) {
+                                            echo set_select('agama', 'Islam');
+                                          } else {
+                                            if ($user['agama'] == 'Islam') {
+                                              echo "selected";
+                                            }
+                                          } ?>>
+									Islam</option>
+								<option value="Katolik" <?php if (validation_errors()) {
+                                            echo set_select('agama', 'Katolik');
+                                          } else {
+                                            if ($user['agama'] == 'Katolik') {
+                                              echo "selected";
+                                            }
+                                          } ?>>
+									Katolik</option>
+								<option value="Kristen" <?php if (validation_errors()) {
+                                            echo set_select('agama', 'Kristen');
+                                          } else {
+                                            if ($user['agama'] == 'Kristen') {
+                                              echo "selected";
+                                            }
+                                          } ?>>
+									Kristen</option>
+								<option value="Hindu" <?php if (validation_errors()) {
+                                            echo set_select('agama', 'Hindu');
+                                          } else {
+                                            if ($user['agama'] == 'Hindu') {
+                                              echo "selected";
+                                            }
+                                          } ?>>
+									Hindu</option>
+								<option value="Budha" <?php if (validation_errors()) {
+                                            echo set_select('agama', 'Budha');
+                                          } else {
+                                            if ($user['agama'] == 'Budha') {
+                                              echo "selected";
+                                            }
+                                          } ?>>
+									Budha</option>
+								<option value="Konghuchu" <?php if (validation_errors()) {
+                                            echo set_select('agama', 'Konghuchu');
+                                          } else {
+                                            if ($user['agama'] == 'Konghuchu') {
+                                              echo "selected";
+                                            }
+                                          } ?>>
+									Konghuchu</option>
+							</select>
+						</div>
+
+					</div>
+
+					<div class="form-group">
+						<label for="gender" class="col-sm-2 control-label">Status Perkawinan</label>
+
+						<div class="col-sm-3">
+							<select name="status" class="form-control">
+								<option value="" <?php echo set_select('status', '', TRUE); ?>>Pilih Status Perkawinan</option>
+								<option value="Kawin" <?php if (validation_errors()) {
+                                            echo set_select('status', 'Kawin');
+                                          } else {
+                                            if ($user['status'] == 'Kawin') {
+                                              echo "selected";
+                                            }
+                                          } ?>>
+									Kawin</option>
+								<option value="Tidak Kawin" <?php if (validation_errors()) {
+                                            echo set_select('status', 'Tidak Kawin');
+                                          } else {
+                                            if ($user['status'] == 'Tidak Kawin') {
+                                              echo "selected";
+                                            }
+                                          } ?>>
+									Tidak Kawin</option>
+								<option value="Duda" <?php if (validation_errors()) {
+                                            echo set_select('status', 'Duda');
+                                          } else {
+                                            if ($user['status'] == 'Duda') {
+                                              echo "selected";
+                                            }
+                                          } ?>>
+									Duda</option>
+								<option value="Janda" <?php if (validation_errors()) {
+                                            echo set_select('status', 'Janda');
+                                          } else {
+                                            if ($user['status'] == 'Janda') {
+                                              echo "selected";
+                                            }
+                                          } ?>>
+									Janda</option>
+							</select>
+						</div>
+
+					</div>
 
 					<div class="form-group">
 						<label for="email" class="col-sm-2 control-label">Email</label>
@@ -169,7 +270,7 @@
 						<label for="alamat" class="col-sm-2 control-label">Alamat</label>
 
 						<div class="col-sm-9">
-							<textarea name="alamat" class="form-control" id="firstname" placeholder=""><?php if (validation_errors()) {
+							<textarea name="alamat" class="form-control" id="alamat" placeholder=""><?php if (validation_errors()) {
                                                                                             echo set_value('alamat');
                                                                                           } else {
                                                                                             echo $user['alamat'];

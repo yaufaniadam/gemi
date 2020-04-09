@@ -288,9 +288,10 @@ class Users extends Admin_Controller
 					'no_sk_penempatan' => $this->input->post('no_sk_penempatan'),
 					'keterangan' => $this->input->post('keterangan'),
 					'id_unit' => $this->input->post('id_unit'),
-					'awal_penempatan' => $this->input->post('awal_penempatan'),
-					'akhir_penempatan' => $this->input->post('akhir_penempatan'),
-					'file_sk_penempatan' => $upload_path . '/' . $file_sk['file_name'],
+					'awal_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/','-',$this->input->post('awal_penempatan')))), 
+					'akhir_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/','-',$this->input->post('akhir_penempatan')))), 					
+					'file_sk_penempatan' => ($file_sk['file_name']) !== "" ? $upload_path . '/' . $file_sk['file_name'] : $this->input->post('file_sk_hidden'),
+				
 					'date' => date('Y-m-d : h:m:s'),
 				);
 				$data = $this->security->xss_clean($data);
