@@ -5,7 +5,7 @@
 			parent::__construct();
 			$this->load->model('admin/unit_model', 'unit_model');
 			$this->load->model('admin/user_model', 'user_model');
-			$this->load->model('kinerja/kinerjaunit_model', 'kinerjaunit_model');
+			$this->load->model('kinerja/Kinerjaunit_model', 'kinerjaunit_model');
 			$this->load->library('datatable'); // loaded my custom serverside datatable library
 		}
 
