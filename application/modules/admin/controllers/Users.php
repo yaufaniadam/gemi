@@ -89,7 +89,7 @@ class Users extends Admin_Controller
 					'updated_at' => date('Y-m-d : h:m:s'),
 					'is_verify' => 1,
 					'is_active' => 1,
-					//'role' => $this->input->post('role'),
+					'role' => 3,
 				);
 				$data = $this->security->xss_clean($data);
 				$result = $this->user_model->add_user($data);
