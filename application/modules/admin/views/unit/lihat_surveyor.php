@@ -1,8 +1,7 @@
 <?php 
-  $uri_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-  $uri_segments = explode('/', $uri_path);
-  $sub_maqasid= $uri_segments[7];
-  ?>
+    $last = $this->uri->total_segments();
+    $sub_maqasid= $this->uri->segment($last);
+?>
 <ul class="nav nav-tabs">
 
   <li role="presentation" <?php if($sub_maqasid == 'product_knowledge') { echo 'class="active"'; } ?>><a href="<?php echo base_url('admin/unit/lihat_unit/'. $current_kantor . "/".$current_unit."/product_knowledge" ); ?>">

@@ -1,13 +1,8 @@
 <?php 
-  $uri_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-  $uri_segments = explode('/', $uri_path);
-  $sub_maqasid= $uri_segments[6];
-  ?>
+    $last = $this->uri->total_segments();
+    $sub_maqasid= $this->uri->segment($last);
+?>
 <ul class="nav nav-tabs">
-
-
-
-
   <li role="presentation" <?php if($sub_maqasid == 'funding') { echo 'class="active"'; } ?>><a href="<?php echo base_url('admin/unit/lihat_unit/'. $current_kantor . "/".$current_unit."/funding" ); ?>">
   <h4>Hifdz Al-Maal</h4><p>Funding</p></a></li>
 
@@ -19,9 +14,6 @@
 
   <li role="presentation" <?php if($sub_maqasid == 'npf') { echo 'class="active"'; } ?>><a href="<?php echo base_url('admin/unit/lihat_unit/'. $current_kantor . "/".$current_unit."/npf" ); ?>">
   <h4>Hifdz Al-Maal</h4><p>NPF</p></a></li>
-
-
-
 </ul>
 </ul>
 
