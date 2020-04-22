@@ -25,6 +25,7 @@
           <th>Username</th>
           <th>Nama</th>
           <th>Email</th>      
+          <th>role</th>      
           <th class="text-center">Aksi</th>
         </tr>
         </thead>

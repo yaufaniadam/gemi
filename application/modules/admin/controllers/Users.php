@@ -35,6 +35,7 @@ class Users extends Admin_Controller
 				$row['username'],
 				$row['firstname'],
 				$row['email'],
+				$row['role'],
 
 				'<a title="Edit" class="update btn btn-sm btn-primary" href="' . base_url('admin/users/edit/' . $row['id']) . '"> <i class="fa fa-pencil-square-o"></i></a>
 				<a title="Lihat Profil" class="view btn btn-sm btn-info" href="' . base_url('admin/users/detail/' . $row['id']) . '"> <i class="fa fa-eye"></i></a>
