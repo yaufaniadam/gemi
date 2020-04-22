@@ -79,6 +79,19 @@
                   </select>
                 </div>
               </div>
+
+              <div class="form-group">
+                <label for="role" class="col-sm-2 control-label">Pilih Role</label>
+
+                <div class="col-sm-9">
+                  <select name="role" class="form-control">
+                    <option value="">Pilih Role</option>
+                    <option value="1" <?php  if( $user['role'] == 1) echo 'selected="selected"'; ?>>Administrator</option>
+                    <option value="3" <?php  if( $user['role'] == 3) echo 'selected="selected"'; ?>>Non Administrator</option>                
+                  </select>
+                </div>
+              </div>
+
              <!--<div class="form-group">
                 <label for="role" class="col-sm-2 control-label">Select Group</label>
 
