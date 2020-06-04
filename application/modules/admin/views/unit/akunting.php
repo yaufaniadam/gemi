@@ -1,8 +1,6 @@
 <!-- daterange picker -->
 <link rel="stylesheet" href="<?= base_url() ?>public/plugins/daterangepicker/daterangepicker.css">
 
-
-
 <h3>Hifdz Al-Maal</h3>
 <h4>Laporan keuangan Akhir Bulan</h4>
 <hr>

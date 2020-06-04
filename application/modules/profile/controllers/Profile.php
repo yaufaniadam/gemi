@@ -5,6 +5,7 @@ class Profile extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->model('admin/user_model', 'user_model');
+		$this->load->model('profile/profile_model', 'profile_model');
 	}
 	//-------------------------------------------------------------------------
 
@@ -378,7 +379,7 @@ class Profile extends MY_Controller
 		}
 	}
 
-	public function keluarga()
+	public function keluarga($id=0)
 	{
 		$id = ($this->session->userdata('role') == 1) ? $id = $id :  $id = $this->session->userdata('user_id');
 
@@ -480,7 +481,7 @@ class Profile extends MY_Controller
 		} else {
 
 			$data['keluarga'] = $this->profile_model->get_detail_keluarga_individu($id);
-			$data['title'] = 'Edit Pasutri';
+			$data['title'] = 'Edit Pasutri' . $id;
 			$data['view'] = 'profile/edit_pasutri';
 			$this->load->view('admin/layout', $data);
 		}

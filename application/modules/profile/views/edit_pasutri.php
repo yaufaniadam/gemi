@@ -27,7 +27,7 @@
                   <?= validation_errors();?>
                   <?= isset($msg)? $msg: ''; ?>
               </div>
-            <?php endif; ?>
+           
             <?php echo form_open(base_url('profile/edit_pasutri/'.$keluarga['id']), 'class="form-horizontal"' )?>         
               <div class="form-group">
                 <label for="nama_keluarga" class="col-sm-2 control-label">Nama Lengkap</label>

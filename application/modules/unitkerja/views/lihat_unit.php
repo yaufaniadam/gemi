@@ -1,5 +1,4 @@
 <?php 
-
   $last = $this->uri->total_segments();
   $current_unit= $this->uri->segment($last-1);
   $current_kantor = $this->uri->segment($last-2);

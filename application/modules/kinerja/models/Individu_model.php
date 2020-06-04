@@ -168,4 +168,10 @@ class Individu_model extends CI_Model
 		$query = $this->db->query('select periode_thn from ci_individu_mal where user_id=' . $id . ' group by periode_thn order by periode_thn  ASC ');
 		return $result = $query->result_array();
 	}
+
+	public function add_raport($data){			
+
+		$this->db->insert('ci_raport', $data);
+		return "raport";
+	}
 }

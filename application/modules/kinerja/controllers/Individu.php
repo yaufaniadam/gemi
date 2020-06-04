@@ -340,4 +340,68 @@ class Individu extends MY_Controller
 		}
 	} //mal
 
+	public function tambah_raport(){
+		if($this->input->post('submit')){
+
+			//$this->form_validation->set_rules('saving', 'Jumlah Tabungan', 'trim|required');
+			
+
+			/*if ($this->form_validation->run() == FALSE) {
+				$data['individu_nasb'] = $this->individu_model->get_individu_nasb();
+				$data['anak'] = $this->profile_model->get_anak();
+				$data['view'] = 'kinerja/nasb';
+				$this->load->view('admin/layout', $data);
+			}
+			else{ */
+
+				$upload_path = './uploads/raport';
+
+					if (!is_dir($upload_path)) {
+						 mkdir($upload_path, 0777, TRUE);					
+					}
+					//$newName = "hrd-".date('Ymd-His');
+					$config = array(
+							'upload_path' => $upload_path,
+							'allowed_types' => "doc|docx|xls|xlsx|ppt|pptx|odt|rtf|jpg|png|pdf",
+							'overwrite' => FALSE,				
+					);					
+
+					$this->load->library('upload', $config);
+					$this->upload->do_upload('raport');
+					$raport = $this->upload->data();
+
+					$data = array(
+						'user_id'=> $this->session->userdata('user_id'),
+						'id_keluarga'=>  $this->input->post('id_keluarga'),		
+					
+						'raport' => $upload_path.'/'.$raport['file_name'],		
+					);
+								
+					$data = $this->security->xss_clean($data);
+					$result = $this->individu_model->add_raport($data);
+
+					if($result){
+						$this->session->set_flashdata('msg', 'Kinerja telah ditambahkan!');
+						redirect(base_url('kinerja/individu/detail_nasl'));
+					} 
+
+			//	} 
+
+			}
+
+			else{
+				$data['individu_nasb'] = $this->individu_model->get_individu_nasb();
+				$data['anak'] = $this->profile_model->get_anak();
+				$data['view'] = 'kinerja/individu/detail_nasl';
+				$this->load->view('admin/layout', $data);
+			}
+	}
+
+
+	public function del_raport($id = 0){
+		$this->db->delete('ci_raport', array('id' => $id));
+		$this->session->set_flashdata('msg', 'Raport berhasil dihapus!');
+		redirect(base_url('kinerja/individu/detail_nasl'));
+	}
+
 } //class

@@ -75,7 +75,7 @@
 						<label for="tahun_lulus" class="col-sm-2 control-label">Tahun Lulus</label>
 
 						<div class="col-sm-9">
-							<input type="number" style="width:100px" min="2010" max="2030" name="tahun_lulus" value="<?= set_value('tahun_lulus'); ?>"
+							<input type="number" style="width:100px" min="2000" max="2030" name="tahun_lulus" value="<?= set_value('tahun_lulus'); ?>"
 								class="form-control" id="tahun_lulus" placeholder="">
 						</div>
                     </div>

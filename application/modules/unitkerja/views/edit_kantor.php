@@ -49,9 +49,7 @@
                 </div>
               </div>              
               
-              <div class="form-group">               
-                    
-
+              <div class="form-group">                       
                     <div class="col-sm-12">
                         <p>Unit Kerja :</p>
                         <?php 

@@ -1,7 +1,6 @@
 <?php
 $current_kantor = $unitkerja['id_kantor'];
 $current_unit = $unitkerja['id_unit'];
-
 $awal = date_create($unitkerja['awal_penempatan']);
 $akhir = date_create($unitkerja['akhir_penempatan']);
 ?>
