@@ -306,9 +306,9 @@ class Individu extends MY_Controller
 	public function mal()
 	{
 		if ($this->input->post('submit')) {
-			//$this->form_validation->set_rules('saving', 'Jumlah saving', 'trim|required',array('required' => '<b>%s</b> wajib diisi'));
-			//	$this->form_validation->set_rules('hutang', 'Jumlah Hutang', 'trim|required',array('required' => '<b>%s</b> wajib diisi'));
-			//$this->form_validation->set_rules('tempat_hutang', 'Lembaga tempat berhutang', 'trim|required',array('required' => '<b>%s</b> wajib diisi'));
+			$this->form_validation->set_rules('saving', 'Jumlah saving', 'trim|required',array('required' => '<b>%s</b> wajib diisi'));
+			$this->form_validation->set_rules('hutang', 'Jumlah Hutang', 'trim|required',array('required' => '<b>%s</b> wajib diisi'));
+			$this->form_validation->set_rules('tempat_hutang', 'Lembaga tempat berhutang', 'trim|required',array('required' => '<b>%s</b> wajib diisi'));
 
 			if ($this->form_validation->run() == FALSE) {
 				$data['individu_mal'] = $this->individu_model->get_individu_mal();
