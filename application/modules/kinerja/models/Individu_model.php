@@ -81,16 +81,16 @@ class Individu_model extends CI_Model
 
 	public function add_individu_aql($data)
 	{
-		
+
 		$this->db->insert('ci_individu_aql', $data);
-	
+
 		return true;
 	}
 
 	public function get_individu_aql($id = 0, $tahun = 0, $jenis_kegiatan)
 	{
 		$query = $this->db->query('select *			 
-			 	from ci_individu_aql where user_id=' . $id . ' and YEAR(date)=' . $tahun . '  and jenis_kegiatan="'.$jenis_kegiatan.'" order by periode_bln ASC');
+			 	from ci_individu_aql where user_id=' . $id . ' and YEAR(date)=' . $tahun . '  and jenis_kegiatan="' . $jenis_kegiatan . '" order by periode_bln ASC');
 		return $query->result_array();
 	}
 
@@ -161,7 +161,7 @@ class Individu_model extends CI_Model
 					from ci_individu_mal where user_id=' . $id . ' and periode_thn=' . $tahun . ' order by periode_bln ASC');
 		return $query->result_array();
 	}
-	
+
 
 	public function get_individu_mal_grafik_tahun($id)
 	{
@@ -169,7 +169,8 @@ class Individu_model extends CI_Model
 		return $result = $query->result_array();
 	}
 
-	public function add_raport($data){			
+	public function add_raport($data)
+	{
 
 		$this->db->insert('ci_raport', $data);
 		return "raport";

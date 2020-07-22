@@ -1,30 +1,22 @@
 <!-- Main content -->
-    <section class="content">
-      <div class="row">
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-body">
         <div class="col-md-12">
-          <div class="box box-body">
-            <div class="col-md-12">
-              <h4><i class="fa fa-warning"></i> &nbsp; Error!</h4>
-            </div>           
-          </div>
+          <h4><i class="fa fa-warning"></i> &nbsp; Error!</h4>
         </div>
-      </div>      
-
-      <!-- Info boxes -->
-      <div class="row">
-        <div class="col-md-12">
-
-          <h4><?=$error; ?></h4>
-           
-          </div>         
-        </div>
-
-       
       </div>
-      <!-- /.row -->
+    </div>
+  </div>
 
-     
+  <!-- Info boxes -->
+  <div class="row">
+    <div class="col-md-12">
 
-     
-    </section>
- 
+      <h4><?= $error; ?></h4>
+
+    </div>
+  </div>
+  <!-- /.row -->
+</section>
