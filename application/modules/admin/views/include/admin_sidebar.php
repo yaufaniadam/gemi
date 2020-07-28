@@ -37,6 +37,7 @@ $cur_tab = $this->uri->segment(2) == '' ? 'dashboard' : $this->uri->segment(2);
 				<ul class="treeview-menu">
 					<li class="din"><a href="<?= base_url('kinerja/individu/rekap/din'); ?>"><i class="fa fa-circle-o"></i>Hifdz Ad Din</a></li>
 					<li class="nafs"><a href="<?= base_url('kinerja/individu/rekap/nafs'); ?>"><i class="fa fa-circle-o"></i>Hifdz An Nafs</a></li>
+					<li class="nafs"><a href="<?= base_url('kinerja/individu/rekap/aql'); ?>"><i class="fa fa-circle-o"></i>Hifdz Al Aql</a></li>
 					<li class="nasl"><a href="<?= base_url('kinerja/individu/rekap/nasl'); ?>"><i class="fa fa-circle-o"></i>Hifdz An Nasl</a></li>
 					<li class="mal"><a href="<?= base_url('kinerja/individu/rekap/mal'); ?>"><i class="fa fa-circle-o"></i>Hifdz Al Maal</a></li>
 

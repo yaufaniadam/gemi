@@ -436,17 +436,25 @@ class Individu extends MY_Controller
 				case "nasl":
 					$table = "ci_individu_nasl";
 					break;
+				case "aql":
+					$table = "ci_individu_aql";
+					break;
 				default:
 					$table = "ci_individu_din";
 			}
 
 			$months = $this->db->query("SELECT DISTINCT(periode_bln) FROM $table WHERE  periode_thn = $thn ORDER BY periode_bln ASC")->result_array();
 			$years = $this->db->query("SELECT DISTINCT(periode_thn) FROM $table ORDER BY periode_thn ASC")->result_array();
-
-			$query = $this->db->query("SELECT d.*, u.username, u.firstname from $table d
-		LEFT JOIN ci_users u ON u.id = d.user_id
-		WHERE d.periode_thn = '$thn' AND d.periode_bln = '$bln'
-		")->result_array();
+			if ($kat !== 'aql') {
+				$query = $this->db->query("SELECT d.*, u.username, u.firstname from $table d
+				LEFT JOIN ci_users u ON u.id = d.user_id
+				WHERE d.periode_thn = '$thn' AND d.periode_bln = '$bln'
+				")->result_array();
+			} else {
+				$query = $this->db->query("SELECT d.*, u.username, u.firstname from $table d
+				LEFT JOIN ci_users u ON u.id = d.user_id
+				")->result_array();
+			}
 
 			$data['kinerja'] = $query;
 			$data['kat'] = $kat;
@@ -476,6 +484,11 @@ class Individu extends MY_Controller
 				$table = "ci_individu_nasl";
 				$filename = "Hifdz An Nasl";
 				$coltab = 'C';
+				break;
+			case "aql":
+				$table = "ci_individu_aql";
+				$filename = "Hifdz Al Aql";
+				$coltab = 'F';
 				break;
 			case "din":
 				$table = "ci_individu_din";
@@ -552,10 +565,16 @@ class Individu extends MY_Controller
 			],
 		];
 
-		$kinerja = $this->db->query("SELECT d.*, u.username, u.firstname from $table d
-		LEFT JOIN ci_users u ON u.id = d.user_id
-		WHERE d.periode_thn = '$thn' AND d.periode_bln = '$bln'
-		")->result_array();
+		if ($kat !== 'aql') {
+			$kinerja = $this->db->query("SELECT d.*, u.username, u.firstname from $table d
+			LEFT JOIN ci_users u ON u.id = d.user_id
+			WHERE d.periode_thn = '$thn' AND d.periode_bln = '$bln'
+			")->result_array();
+		} else {
+			$kinerja = $this->db->query("SELECT d.*, u.username, u.firstname from $table d
+			LEFT JOIN ci_users u ON u.id = d.user_id		
+			")->result_array();
+		}
 
 		$last_row = count($kinerja) + 4;
 
@@ -649,6 +668,24 @@ class Individu extends MY_Controller
 				$excel->getActiveSheet()->SetCellValue('A' . $rowCount, ($kinerja['username']) ? $kinerja['firstname'] : $kinerja['username']);
 				$excel->getActiveSheet()->SetCellValue('B' . $rowCount, $kinerja['kesehatan_keluarga']);
 				$excel->getActiveSheet()->SetCellValue('C' . $rowCount, $kinerja['partisipasi_keluarga']);
+				$rowCount++;
+			}
+		} elseif ($kat == 'aql') {
+			$excel->getActiveSheet()->SetCellValue('A3', 'Nama Staf');
+			$excel->getActiveSheet()->SetCellValue('B3', 'Nama Kegiatan');
+			$excel->getActiveSheet()->SetCellValue('C3', 'Pembicara');
+			$excel->getActiveSheet()->SetCellValue('D3', 'Jenis Kegiatan');
+			$excel->getActiveSheet()->SetCellValue('E3', 'Tanggal');
+			$excel->getActiveSheet()->SetCellValue('F3', 'Tempat');
+
+			$rowCount = 4;
+			foreach ($kinerja as $kinerja) {
+				$excel->getActiveSheet()->SetCellValue('A' . $rowCount, ($kinerja['username']) ? $kinerja['firstname'] : $kinerja['username']);
+				$excel->getActiveSheet()->SetCellValue('B' . $rowCount, $kinerja['nama_kegiatan']);
+				$excel->getActiveSheet()->SetCellValue('C' . $rowCount, $kinerja['pembicara']);
+				$excel->getActiveSheet()->SetCellValue('D' . $rowCount, $kinerja['jenis_kegiatan']);
+				$excel->getActiveSheet()->SetCellValue('E' . $rowCount, $kinerja['tanggal']);
+				$excel->getActiveSheet()->SetCellValue('F' . $rowCount, $kinerja['tempat']);
 				$rowCount++;
 			}
 		}

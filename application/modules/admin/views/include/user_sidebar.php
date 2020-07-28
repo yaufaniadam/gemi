@@ -15,31 +15,40 @@ $cur_tab = $this->uri->segment(2) == '' ? 'dashboard' : $this->uri->segment(2);
 				</a>
 			</li>
 		</ul>
+
+		<?php
+		$kantor = get_kantor_by_user();
+		echo '<pre>';
+		print_r($kantor);
+		echo '</pre>';
+		?>
 		<ul class="sidebar-menu">
 			<li class="header">KANTOR</li>
 
-			<?php
-			$kantor = get_kantor_by_user();	
+			<?php /*
+			$kantor = get_kantor_by_user();
+			echo '<pre>';
+			print_r($kantor);
+			echo '</pre>';
 			if ($kantor > 0) {
 			?>
 
-			<li class="treeview" id="kantor<?= $kantor['id_kantor']; ?>">
+				<li class="treeview" id="kantor<?= $kantor['id_kantor']; ?>">
 
-				<a href=""><i class="fa fa-building"></i><?= $kantor['kantor'];  ?>
+					<a href=""><i class="fa fa-building"></i><?= $kantor['kantor'];  ?>
 
-					<span class="pull-right-container">
-						<i class="fa fa-angle-left pull-right"></i>
-					</span>
+						<span class="pull-right-container">
+							<i class="fa fa-angle-left pull-right"></i>
+						</span>
 
-				</a>
-				<ul class="treeview-menu">
-				<li class="submenu_kantor"><a href="<?= base_url('unitkerja/detail_kantor/'.$kantor['id_kantor']); ?>"><i
-								class="fa fa-circle-o"></i>Profil Kantor</a></li>
+					</a>
+					<ul class="treeview-menu">
+						<li class="submenu_kantor"><a href="<?= base_url('unitkerja/detail_kantor/' . $kantor['id_kantor']); ?>"><i class="fa fa-circle-o"></i>Profil Kantor</a></li>
 
-					<li class="submenu_din"><a href="<?= base_url("unitkerja/"); ?>"><i class="fa fa-circle-o"></i><?=$kantor['nama_unit']; ?></a></li>				
-				</ul>
-			</li>
-			<?php } ?>
+						<li class="submenu_din"><a href="<?= base_url("unitkerja/"); ?>"><i class="fa fa-circle-o"></i><?= $kantor['nama_unit']; ?></a></li>
+					</ul>
+				</li>
+			<?php } */ ?>
 
 		</ul>
 

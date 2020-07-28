@@ -6,26 +6,28 @@
                     <h4><i class="fa fa-user"></i> &nbsp; Rekap Kinerja Individu (<?= konversiBulanAngkaKeNama($bln); ?> <?= $thn; ?>)</h4>
                 </div>
                 <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-9 text-right">
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-secondary disabled">Tahun : </button>
-                                <?php
-                                foreach ($years as $year) { ?>
-                                    <a class="btn btn-warning" href="<?= base_url('kinerja/individu/rekap/' . $kat . '/' .  $year['periode_thn'] . '/' .  $bln); ?>"><?= $year['periode_thn']; ?></a>
-                                <?php } ?>
+                    <?php if ($kat !== "aql") { ?>
+                        <div class="row">
+                            <div class="col-md-9 text-right">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-secondary disabled">Tahun : </button>
+                                    <?php
+                                    foreach ($years as $year) { ?>
+                                        <a class="btn btn-warning" href="<?= base_url('kinerja/individu/rekap/' . $kat . '/' .  $year['periode_thn'] . '/' .  $bln); ?>"><?= $year['periode_thn']; ?></a>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" id="periode_bln">
+                                    <option value="">Pilih bulan</option>
+                                    <?php
+                                    foreach ($months as $month) { ?>
+                                        <option value="<?= base_url('kinerja/individu/rekap/' . $kat . '/' . $thn . '/' . $month['periode_bln']); ?>" <?= ($month['periode_bln'] == $bln) ? 'selected' : '' ?>><?= konversiBulanAngkaKeNama($month['periode_bln']); ?></option>
+                                    <?php } ?>
+                                </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <select class="form-control" id="periode_bln">
-                                <option value="">Pilih bulan</option>
-                                <?php
-                                foreach ($months as $month) { ?>
-                                    <option value="<?= base_url('kinerja/individu/rekap/' . $kat . '/' . $thn . '/' . $month['periode_bln']); ?>" <?= ($month['periode_bln'] == $bln) ? 'selected' : '' ?>><?= konversiBulanAngkaKeNama($month['periode_bln']); ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
 
@@ -43,6 +45,9 @@
                                 break;
                             case 'nasl':
                                 echo "Hifdz An Nasl (Pemeliharaan Keturunan)";
+                                break;
+                            case 'aql':
+                                echo "Hifdz Al Aql (Pemeliharaan Pikiran)";
                                 break;
                             default:
                                 echo "Hifdz Ad-Din (Pemeliharaan Agama)";
@@ -201,6 +206,50 @@
                             }
                             ?>
                         </table>
+                    <?php } elseif ($kat == 'aql') { ?>
+
+                        <table id="aql" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="200">Nama Staf</th>
+                                    <th>Nama Kegiatan</th>
+                                    <th>Pembicara</th>
+                                    <th>Jenis Kegiatan</th>
+                                    <th>Tanggal</th>
+                                    <th>Tempat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if (count($kinerja) > 0) {
+                                    foreach ($kinerja as $kinerja) {
+                                        echo "<tr>";
+                                        echo "<td>";
+
+                                        echo ($kinerja['username']) ? $kinerja['firstname'] : $kinerja['username'];
+
+                                        echo "</td>";
+                                        echo "<td>" . $kinerja['nama_kegiatan'] . "</td>";
+                                        echo "<td>" . $kinerja['pembicara'] . "</td>";
+                                        echo "<td>" . $kinerja['jenis_kegiatan'] . "</td>";
+                                        echo "<td>" . $kinerja['tanggal'] . "</td>";
+                                        echo "<td>" . $kinerja['tempat'] . "</td>";
+
+                                        echo "</tr>";
+                                    }
+                                } else {
+
+                                    echo "<tr>
+                                <td colspan='7'>
+                                    <p class='alert alert-danger'><i class='fa fa-exclamation-triangle'></i> Belum ada data atau pilih Bulan terlebih dahulu</p>
+                                </td>
+                            </tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+
+
 
                     <?php }    ?>
                 </div>
@@ -210,6 +259,22 @@
     </div><!-- /.row  -->
 
 </section>
+
+<!-- DataTables -->
+<script src="<?= base_url() ?>public/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?= base_url() ?>public/plugins/datatables/dataTables.bootstrap.min.js"></script>
+
+<script>
+    //datatable
+    var table = $("#aql").DataTable({
+        order: [
+            [1, "asc"]
+        ],
+        language: {
+            searchPlaceholder: "Cari data"
+        }
+    });
+</script>
 
 <script>
     $(function() {

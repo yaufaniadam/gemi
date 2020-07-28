@@ -113,20 +113,22 @@ function get_kantor_by_user()
 {
 
     $CI = &get_instance();
-    $id = $CI->session->userdata('user_id');
-    $penempatan = $CI->db->query('SELECT p.*, uk.nama_unit, k.kantor FROM ci_penempatan p     
-    LEFT JOIN ci_unit_kerja uk ON uk.id = p.id_unit
-    LEFT JOIN ci_kantor k ON k.id = p.id_kantor    
-    WHERE user_id=' . $id . ' AND CURRENT_DATE BETWEEN awal_penempatan AND akhir_penempatan         
-    ');
+    return  $id = $CI->session->userdata('user_id');
 
-    $row = $penempatan->row_array();
+    // $penempatan = $CI->db->query('SELECT p.*, uk.nama_unit, k.kantor FROM ci_penempatan p     
+    // LEFT JOIN ci_unit_kerja uk ON uk.id = p.id_unit
+    // LEFT JOIN ci_kantor k ON k.id = p.id_kantor    
+    // WHERE user_id=' . $id . ' AND CURRENT_DATE BETWEEN awal_penempatan AND akhir_penempatan         
+    // ');
+
+    // $row = $penempatan->row_array();
 
 
-    if ($row > 0) {
-        return $row;
-    } else {
-    }
+    // if ($row > 0) {
+    //     return $row;
+    // } else {
+    //     return $id;
+    // }
 }
 
 function get_raport($id = 0)
