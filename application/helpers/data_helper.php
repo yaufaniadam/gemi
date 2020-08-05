@@ -270,4 +270,5 @@ function indonesian_date($timestamp = '', $date_format = 'j F Y', $suffix = 'WIB
     $date = "{$date} {$suffix}";
     return $date;
 }
+
 ?>

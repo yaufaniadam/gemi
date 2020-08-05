@@ -182,8 +182,9 @@ class Users extends Admin_Controller
 			$this->form_validation->set_rules('no_sk_penempatan', 'Nomor SK', 'trim|required');
 			$this->form_validation->set_rules('jabatan', 'Jabatan', 'trim|required');
 			$this->form_validation->set_rules('id_kantor', 'Kantor', 'trim|required');
-			$this->form_validation->set_rules('id_unit', 'Unit', 'trim|required');			
-			$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required'); 		$this->form_validation->set_rules('awal_penempatan', 'Awal Penempatan', 'trim|required');
+			$this->form_validation->set_rules('id_unit', 'Unit', 'trim|required');
+			$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
+			$this->form_validation->set_rules('awal_penempatan', 'Awal Penempatan', 'trim|required');
 			$this->form_validation->set_rules('akhir_penempatan', 'Akhir Penempatan', 'trim|required');
 
 			if ($this->form_validation->run() == FALSE) {
@@ -218,8 +219,8 @@ class Users extends Admin_Controller
 					'no_sk_penempatan' => $this->input->post('no_sk_penempatan'),
 					'keterangan' => $this->input->post('keterangan'),
 					'id_unit' => $this->input->post('id_unit'),
-					'awal_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/','-',$this->input->post('awal_penempatan')))), 
-					'akhir_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/','-',$this->input->post('akhir_penempatan')))), 					
+					'awal_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/', '-', $this->input->post('awal_penempatan')))),
+					'akhir_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/', '-', $this->input->post('akhir_penempatan')))),
 					'file_sk_penempatan' => ($file_sk['file_name']) !== "" ? $upload_path . '/' . $file_sk['file_name'] : $this->input->post('file_sk_penempatan_hidden'),
 					'date' =>  date('Y-m-d : h:m:s'),
 				);
@@ -289,10 +290,10 @@ class Users extends Admin_Controller
 					'no_sk_penempatan' => $this->input->post('no_sk_penempatan'),
 					'keterangan' => $this->input->post('keterangan'),
 					'id_unit' => $this->input->post('id_unit'),
-					'awal_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/','-',$this->input->post('awal_penempatan')))), 
-					'akhir_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/','-',$this->input->post('akhir_penempatan')))), 					
+					'awal_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/', '-', $this->input->post('awal_penempatan')))),
+					'akhir_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/', '-', $this->input->post('akhir_penempatan')))),
 					'file_sk_penempatan' => ($file_sk['file_name']) !== "" ? $upload_path . '/' . $file_sk['file_name'] : $this->input->post('file_sk_hidden'),
-				
+
 					'date' => date('Y-m-d : h:m:s'),
 				);
 				$data = $this->security->xss_clean($data);
@@ -342,7 +343,8 @@ class Users extends Admin_Controller
 	}
 
 	// notes about user
-	public function notes($user_id=null) {
+	public function notes($user_id = null)
+	{
 		$data['user'] = $this->user_model->get_user_by_id($user_id);
 		$data['notes'] = $this->user_model->get_notes_by_userid($user_id);
 		$data['view'] = 'admin/users/notes';
@@ -350,10 +352,11 @@ class Users extends Admin_Controller
 		$this->load->view('layout', $data);
 	}
 
-	public function tambah_notes($user_id=0) {
+	public function tambah_notes($user_id = 0)
+	{
 
 		if ($this->input->post('submit')) {
-		
+
 			$this->form_validation->set_rules('notes', 'Catatan', 'trim|required');
 
 			if ($this->form_validation->run() == FALSE) {
@@ -361,13 +364,13 @@ class Users extends Admin_Controller
 				$data['view'] = 'admin/users/tambah_notes';
 				$this->load->view('layout', $data);
 			} else {
-				
+
 
 				$data = array(
 					'user_id' => $this->input->post('user_id'),
 					'notes' => $this->input->post('notes'),
 					'user_id_mgmt' => $this->session->userdata('user_id'),
-					
+
 					'date' =>  date('Y-m-d : h:m:s'),
 				);
 				$data = $this->security->xss_clean($data);
@@ -378,11 +381,94 @@ class Users extends Admin_Controller
 					redirect(base_url('admin/users/notes'));
 				}
 			}
-			
 		} else {
 			$data['user'] = $this->user_model->get_user_by_id($user_id);
 			$data['view'] = 'admin/users/tambah_notes';
 			$this->load->view('layout', $data);
 		}
+	}
+
+	public function upload()
+	{
+		if (isset($_POST['submit'])) {
+			$upload_path = './uploads';
+
+			if (!is_dir($upload_path)) {
+				mkdir($upload_path, 0777, TRUE);
+			}
+
+			$config = array(
+				'upload_path' => $upload_path,
+				'allowed_types' => "xlsx",
+				'overwrite' => FALSE,
+			);
+
+			$this->load->library('upload', $config);
+			$this->upload->do_upload('file');
+			$upload = $this->upload->data();
+
+
+			if ($upload) { // Jika proses upload sukses			    	
+
+				$excelreader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+				$loadexcel = $excelreader->load('./uploads/' . $upload['file_name']); // Load file yang tadi diupload ke folder excel
+				$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true, true);
+
+				$data['sheet'] = $sheet;
+				$data['file_excel'] = $upload['file_name'];
+
+				$data['title'] = 'Upload Pengguna';
+				$data['view'] = 'admin/users/upload';
+
+				$this->load->view('layout', $data);
+			} else {
+				$data['title'] = 'Upload Pengguna';
+				$data['view'] = 'admin/users/upload';
+				$this->load->view('layout', $data);
+			}
+		} else {
+			$data['title'] = 'Upload Pengguna';
+			$data['view'] = 'admin/users/upload';
+			$this->load->view('layout', $data);
+		}
+	}
+
+	public function import($file_excel)
+	{
+		$excelreader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+		$loadexcel = $excelreader->load('./uploads/' . $file_excel); // Load file yang telah diupload ke folder excel
+		$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true, true);
+
+		$data_user = array();
+
+		$numrow = 1;
+		foreach ($sheet as $row) {
+
+			if ($numrow > 1) {
+
+				// Kita push (add) array data ke variabel data
+				array_push($data_user, array(
+					'password' => password_hash($row['A'], PASSWORD_BCRYPT),
+					'username' => $row['A'],
+					'firstname' => $row['B'],
+					'email' => $row['C'],
+					'password' => password_hash($row['D'], PASSWORD_BCRYPT),
+					'created_at' => date('Y-m-d : h:m:s'),
+					'role' => $row['E'],
+					'unit' => $row['F'],
+					'kantor' => $row['G'],
+					'penempatan' => $row['H'],
+					'awal' => $row['I'],
+					'akhir' => $row['J'],
+
+				));
+			}
+
+			$numrow++; // Tambah 1 setiap kali looping
+		}
+
+		$this->user_model->import_users($data_user);
+
+		redirect("admin/users"); // Redirect ke halaman awal (ke controller siswa fungsi index)
 	}
 }
