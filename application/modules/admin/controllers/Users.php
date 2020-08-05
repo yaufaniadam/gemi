@@ -14,6 +14,8 @@ class Users extends Admin_Controller
 
 	public function index()
 	{
+
+		$data['users'] = $this->user_model->get_all_users();
 		$data['view'] = 'admin/users/user_list';
 		$this->load->view('layout', $data);
 	}

@@ -12,15 +12,9 @@ class User_model extends CI_Model
 	// get all users for server-side datatable processing (ajax based)
 	public function get_all_users()
 	{
-		$wh = array();
-		$SQL = 'SELECT * FROM ci_users';
-		$wh[] = " is_admin = 0";
-		if (count($wh) > 0) {
-			$WHERE = implode(' and ', $wh);
-			return $this->datatable->LoadJson($SQL, $WHERE);
-		} else {
-			return $this->datatable->LoadJson($SQL);
-		}
+		$this->db->where('is_admin', 0);
+		$query = $this->db->get('ci_users');
+		return $query->result_array();
 	}
 
 	//---------------------------------------------------
