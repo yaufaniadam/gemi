@@ -16,20 +16,16 @@ $cur_tab = $this->uri->segment(2) == '' ? 'dashboard' : $this->uri->segment(2);
 			</li>
 		</ul>
 
-		<?php
-		$kantor = get_kantor_by_user();
-		echo '<pre>';
-		print_r($kantor);
-		echo '</pre>';
-		?>
+
 		<ul class="sidebar-menu">
 			<li class="header">KANTOR</li>
 
-			<?php /*
+			<?php
 			$kantor = get_kantor_by_user();
-			echo '<pre>';
-			print_r($kantor);
-			echo '</pre>';
+			// echo '<pre>';
+			// print_r($kantor);
+			// echo '</pre>';
+
 			if ($kantor > 0) {
 			?>
 
@@ -48,7 +44,7 @@ $cur_tab = $this->uri->segment(2) == '' ? 'dashboard' : $this->uri->segment(2);
 						<li class="submenu_din"><a href="<?= base_url("unitkerja/"); ?>"><i class="fa fa-circle-o"></i><?= $kantor['nama_unit']; ?></a></li>
 					</ul>
 				</li>
-			<?php } */ ?>
+			<?php }  ?>
 
 		</ul>
 

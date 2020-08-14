@@ -113,16 +113,17 @@ function get_kantor_by_user()
 {
 
     $CI = &get_instance();
-    return  $id = $CI->session->userdata('user_id');
+    $id = $CI->session->userdata('user_id');
 
-    // $penempatan = $CI->db->query('SELECT p.*, uk.nama_unit, k.kantor FROM ci_penempatan p     
-    // LEFT JOIN ci_unit_kerja uk ON uk.id = p.id_unit
-    // LEFT JOIN ci_kantor k ON k.id = p.id_kantor    
-    // WHERE user_id=' . $id . ' AND CURRENT_DATE BETWEEN awal_penempatan AND akhir_penempatan         
-    // ');
+    $penempatan = $CI->db->query('SELECT p.*, uk.nama_unit, k.kantor FROM ci_penempatan p     
+    LEFT JOIN ci_unit_kerja uk ON uk.id = p.id_unit
+    LEFT JOIN ci_kantor k ON k.id = p.id_kantor    
+    WHERE user_id=' . $id . ' AND CURRENT_DATE BETWEEN awal_penempatan AND akhir_penempatan         
+    ');
 
-    // $row = $penempatan->row_array();
+    $row = $penempatan->row_array();
 
+    return $row;
 
     // if ($row > 0) {
     //     return $row;
