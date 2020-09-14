@@ -67,6 +67,9 @@ $kinerja = $this->uri->segment($last);
             } else if ($kinerja_unit == "digimark") {
 
               include "lihat_digimark.php";
+            } else if ($kinerja_unit == "ce") {
+
+              include "lihat_ce.php";
             } else {
               include "lihat_auditor.php";
             }

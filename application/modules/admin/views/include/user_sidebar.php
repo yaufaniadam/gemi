@@ -22,9 +22,6 @@ $cur_tab = $this->uri->segment(2) == '' ? 'dashboard' : $this->uri->segment(2);
 
 			<?php
 			$kantor = get_kantor_by_user();
-			// echo '<pre>';
-			// print_r($kantor);
-			// echo '</pre>';
 
 			if ($kantor > 0) {
 			?>
@@ -41,7 +38,7 @@ $cur_tab = $this->uri->segment(2) == '' ? 'dashboard' : $this->uri->segment(2);
 					<ul class="treeview-menu">
 						<li class="submenu_kantor"><a href="<?= base_url('unitkerja/detail_kantor/' . $kantor['id_kantor']); ?>"><i class="fa fa-circle-o"></i>Profil Kantor</a></li>
 
-						<li class="submenu_din"><a href="<?= base_url("unitkerja/"); ?>"><i class="fa fa-circle-o"></i><?= $kantor['nama_unit']; ?></a></li>
+						<li class="unit<?= $kantor['id_unit']; ?>"><a href="<?= base_url("unitkerja/"); ?>"><i class="fa fa-circle-o"></i><?= $kantor['nama_unit']; ?></a></li>
 					</ul>
 				</li>
 			<?php }  ?>

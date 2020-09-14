@@ -83,6 +83,10 @@
 			$this->db->insert('ci_hrd', $data);
 			return true;
 		}
+		public function add_ce($data) {
+			$this->db->insert('ci_ce', $data);
+			return true;
+		}
 		public function add_teller($data) {
 			$this->db->insert('ci_teller', $data);
 			return true;
@@ -133,5 +137,3 @@
 		}
 
 	}
-
-?>
