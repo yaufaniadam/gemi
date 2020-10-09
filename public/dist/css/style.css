@@ -79,7 +79,12 @@ body {
 
 }
 
+@media (max-width: 720px) {
+	.my-form-body {
+		width: 100% !important;
+	}
 
+}
 
 
 .info-box-content {

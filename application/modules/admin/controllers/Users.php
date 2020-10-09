@@ -180,6 +180,7 @@ class Users extends Admin_Controller
 		//$all = $this->user_model->get_all_simple_users();
 
 		if ($this->input->post('submit')) {
+
 			$this->form_validation->set_rules('user_id', 'Nama Pegawai', 'trim|required');
 			$this->form_validation->set_rules('no_sk_penempatan', 'Nomor SK', 'trim|required');
 			$this->form_validation->set_rules('jabatan', 'Jabatan', 'trim|required');
@@ -221,8 +222,8 @@ class Users extends Admin_Controller
 					'no_sk_penempatan' => $this->input->post('no_sk_penempatan'),
 					'keterangan' => $this->input->post('keterangan'),
 					'id_unit' => $this->input->post('id_unit'),
-					'awal_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/', '-', $this->input->post('awal_penempatan')))),
-					'akhir_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/', '-', $this->input->post('akhir_penempatan')))),
+					'awal_penempatan' => date_format(date_create($this->input->post('awal_penempatan')), 'Y-m-d'),
+					'akhir_penempatan' => date_format(date_create($this->input->post('akhir_penempatan')), 'Y-m-d'),
 					'file_sk_penempatan' => ($file_sk['file_name']) !== "" ? $upload_path . '/' . $file_sk['file_name'] : $this->input->post('file_sk_penempatan_hidden'),
 					'date' =>  date('Y-m-d : h:m:s'),
 				);
@@ -292,8 +293,8 @@ class Users extends Admin_Controller
 					'no_sk_penempatan' => $this->input->post('no_sk_penempatan'),
 					'keterangan' => $this->input->post('keterangan'),
 					'id_unit' => $this->input->post('id_unit'),
-					'awal_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/', '-', $this->input->post('awal_penempatan')))),
-					'akhir_penempatan' => date('Y-m-d : H:i:s', strtotime(str_replace('/', '-', $this->input->post('akhir_penempatan')))),
+					'awal_penempatan' => date_format(date_create($this->input->post('awal_penempatan')), 'Y-m-d'),
+					'akhir_penempatan' => date_format(date_create($this->input->post('akhir_penempatan')), 'Y-m-d'),
 					'file_sk_penempatan' => ($file_sk['file_name']) !== "" ? $upload_path . '/' . $file_sk['file_name'] : $this->input->post('file_sk_hidden'),
 
 					'date' => date('Y-m-d : h:m:s'),

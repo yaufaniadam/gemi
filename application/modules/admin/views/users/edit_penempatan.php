@@ -53,7 +53,11 @@
   										<div class="input-group-addon">
   											<i class="fa fa-calendar"></i>
   										</div>
-  										<input name="awal_penempatan" value="<?php echo (validation_errors()) ? set_value('awal_penempatan') : $penempatan['awal_penempatan']; ?>" type="text" class="form-control pull-right" id="awal_penempatan">
+  										<?php $awal = date_format(date_create($penempatan['awal_penempatan']), 'd-M-Y');
+											$akhir = date_format(date_create($penempatan['akhir_penempatan']), 'd-M-Y');
+
+											?>
+  										<input name="awal_penempatan" value="<?php echo (validation_errors()) ? set_value('awal_penempatan') : $awal; ?>" type="text" class="form-control pull-right" id="awal_penempatan">
   									</div>
   								</div>
   								<div class="col-sm-2"> <span style="padding-top:7px;display:inline-block;" class="text-center">hingga</span> </div>
@@ -62,7 +66,7 @@
   										<div class="input-group-addon">
   											<i class="fa fa-calendar"></i>
   										</div>
-  										<input name="akhir_penempatan" value="<?php echo (validation_errors()) ? set_value('akhir_penempatan') :  $penempatan['akhir_penempatan'];  ?>" type="text" class="form-control pull-right" id="akhir_penempatan">
+  										<input name="akhir_penempatan" value="<?php echo (validation_errors()) ? set_value('akhir_penempatan') :  $akhir;  ?>" type="text" class="form-control pull-right" id="akhir_penempatan">
   									</div>
 
   								</div>
@@ -185,11 +189,13 @@
 
   	//Date picker
   	$('#awal_penempatan').datepicker({
-  		autoclose: true
+  		autoclose: true,
+  		format: 'dd-M-yyyy',
   	});
   	//Date picker
   	$('#akhir_penempatan').datepicker({
   		autoclose: true,
+  		format: 'dd-M-yyyy',
 
   	});
   </script>

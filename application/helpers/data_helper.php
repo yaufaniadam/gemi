@@ -198,40 +198,112 @@ function konversiBulanAngkaKeNama_short($tanggal)
 
     return  $bulan[$tanggal];
 }
-function option_bulan()
+function option_bulan($id = 0, $bln = 0)
 {
-    $month = date('n'); ?>
-    <select name="periode_bln" class="form-control" id="periode_bln">
-        <option value="1" <?= ($month == 1) ? 'Selected = "selected"' : ''; ?>>Januari</option>
-        <option value="2" <?= ($month == 2) ? 'Selected = "selected"' : ''; ?>>Februari</option>
-        <option value="3" <?= ($month == 3) ? 'Selected = "selected"' : ''; ?>>Maret</option>
-        <option value="4" <?= ($month == 4) ? 'Selected = "selected"' : ''; ?>>April</option>
-        <option value="5" <?= ($month == 5) ? 'Selected = "selected"' : ''; ?>>Mei</option>
-        <option value="6" <?= ($month == 6) ? 'Selected = "selected"' : ''; ?>>Juni</option>
-        <option value="7" <?= ($month == 7) ? 'Selected = "selected"' : ''; ?>>Juli</option>
-        <option value="8" <?= ($month == 8) ? 'Selected = "selected"' : ''; ?>>Agustus</option>
-        <option value="9" <?= ($month == 9) ? 'Selected = "selected"' : ''; ?>>September</option>
-        <option value="10" <?= ($month == 10) ? 'Selected = "selected"' : ''; ?>>Oktober</option>
-        <option value="11" <?= ($month == 11) ? 'Selected = "selected"' : ''; ?>>November</option>
-        <option value="12" <?= ($month == 12) ? 'Selected = "selected"' : ''; ?>>Desember</option>
-    </select>
+    if (!$id) {
+        $month = date('n'); ?>
 
-<?php }
+        <select name="periode_bln" class="form-control" id="periode_bln">
+            <option value="1" <?= ($month == 1) ? 'Selected = "selected"' : ''; ?>>Januari</option>
+            <option value="2" <?= ($month == 2) ? 'Selected = "selected"' : ''; ?>>Februari</option>
+            <option value="3" <?= ($month == 3) ? 'Selected = "selected"' : ''; ?>>Maret</option>
+            <option value="4" <?= ($month == 4) ? 'Selected = "selected"' : ''; ?>>April</option>
+            <option value="5" <?= ($month == 5) ? 'Selected = "selected"' : ''; ?>>Mei</option>
+            <option value="6" <?= ($month == 6) ? 'Selected = "selected"' : ''; ?>>Juni</option>
+            <option value="7" <?= ($month == 7) ? 'Selected = "selected"' : ''; ?>>Juli</option>
+            <option value="8" <?= ($month == 8) ? 'Selected = "selected"' : ''; ?>>Agustus</option>
+            <option value="9" <?= ($month == 9) ? 'Selected = "selected"' : ''; ?>>September</option>
+            <option value="10" <?= ($month == 10) ? 'Selected = "selected"' : ''; ?>>Oktober</option>
+            <option value="11" <?= ($month == 11) ? 'Selected = "selected"' : ''; ?>>November</option>
+            <option value="12" <?= ($month == 12) ? 'Selected = "selected"' : ''; ?>>Desember</option>
+        </select>
 
-function option_tahun()
+    <?php } else {
+    ?>
+        <select name="periode_bln" class="form-control" id="status">
+            <option value="" <?php echo set_select('periode_bln', '', TRUE); ?>>Pilih </option>
+            <option value="1" <?= (validation_errors()) ?
+                                    set_select('periode_bln', '1')
+                                    : (($bln == '1') ? "selected" : "");
+                                ?>>Januari</option>
+            <option value="2" <?= (validation_errors()) ?
+                                    set_select('periode_bln', '2')
+                                    : (($bln == '2') ? "selected" : "");
+                                ?>>Februari</option>
+            <option value="3" <?= (validation_errors()) ?
+                                    set_select('periode_bln', '3')
+                                    : (($bln == '3') ? "selected" : "");
+                                ?>>Maret</option>
+            <option value="4" <?= (validation_errors()) ?
+                                    set_select('periode_bln', '4')
+                                    : (($bln == '4') ? "selected" : "");
+                                ?>>April</option>
+            <option value="5" <?= (validation_errors()) ?
+                                    set_select('periode_bln', '5')
+                                    : (($bln == '5') ? "selected" : "");
+                                ?>>Mei</option>
+            <option value="6" <?= (validation_errors()) ?
+                                    set_select('periode_bln', '6')
+                                    : (($bln == '6') ? "selected" : "");
+                                ?>>Juni</option>
+            <option value="7" <?= (validation_errors()) ?
+                                    set_select('periode_bln', '7')
+                                    : (($bln == '7') ? "selected" : "");
+                                ?>>Juli</option>
+            <option value="8" <?= (validation_errors()) ?
+                                    set_select('periode_bln', '8')
+                                    : (($bln == '8') ? "selected" : "");
+                                ?>>Agustus</option>
+            <option value="9" <?= (validation_errors()) ?
+                                    set_select('periode_bln', '9')
+                                    : (($bln == '9') ? "selected" : "");
+                                ?>>September</option>
+            <option value="10" <?= (validation_errors()) ?
+                                    set_select('periode_bln', '10')
+                                    : (($bln == '10') ? "selected" : "");
+                                ?>>Oktober</option>
+            <option value="11" <?= (validation_errors()) ?
+                                    set_select('periode_bln', '11')
+                                    : (($bln == '11') ? "selected" : "");
+                                ?>>November</option>
+            <option value="12" <?= (validation_errors()) ?
+                                    set_select('periode_bln', '2')
+                                    : (($bln == '2') ? "selected" : "");
+                                ?>>Desember</option>
+        </select>
+    <?php }
+}
+
+function option_tahun($id = 0, $thn = 0)
 {
-    $year = date('Y');
-    $i = 2020; ?>
-    <select name="periode_thn" class="form-control" id="periode_thn">
-        <option>Pilih tahun</option>
-        <?php while ($i <= 2025) {
-            $selected = ($year == $i) ? 'Selected = "selected"' : '';
-            echo '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>';
-            $i++;
-        }  ?>
-    </select>
+    if (!$id) {
+        $year = date('Y');
+        $i = 2020;
+    ?>
+        <select name="periode_thn" class="form-control" id="periode_thn">
+            <option>Pilih tahun</option>
+            <?php while ($i <= 2025) {
+                $selected = ($year == $i) ? 'Selected = "selected"' : '';
+                echo '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>';
+                $i++;
+            }  ?>
+        </select>
 
+    <?php } else {
+        $i = 2020; ?>
+        <select name="periode_thn" class="form-control" id="periode_thn">
+            <option value="" <?php echo set_select('periode_thn', '', TRUE); ?>>Pilih tahun</option>
+            <?php while ($i <= 2025) { ?>
+
+                <option value="<?= $i; ?>" <?= (validation_errors()) ?
+                                                set_select('periode_thn', $i)
+                                                : (($thn == $i) ? "selected" : "");
+                                            ?>><?= $i; ?></option>
+            <?php $i++;
+            }  ?>
+        </select>
 <?php }
+}
 
 function get_sub_kategori_minat($kat_id)
 {

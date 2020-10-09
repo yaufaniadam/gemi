@@ -20,44 +20,43 @@
 				<!-- form start -->
 				<div class="box-body m-form-body">
 					<?php if (isset($msg) || validation_errors() !== '') : ?>
-					<div class="alert alert-warning alert-dismissible">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-						<h4><i class="icon fa fa-warning"></i> Alert!</h4>
-						<?= validation_errors(); ?>
-						<?= isset($msg) ? $msg : ''; ?>
-					</div>
+						<div class="alert alert-warning alert-dismissible">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<h4><i class="icon fa fa-warning"></i> Alert!</h4>
+							<?= validation_errors(); ?>
+							<?= isset($msg) ? $msg : ''; ?>
+						</div>
 					<?php endif; ?>
 
-					
-					<?php 
-					
+
+					<?php
+
 					echo form_open(base_url('profile/minat'), 'class="form-horizontal"');  ?>
 					<p>Pilih beberapa minat dan keahlian yang Anda kuasai di bawah ini lalu
 						tekan tombol <strong>Simpan</strong></p><br>
 					<?php foreach ($kategori_minat as $row) { ?>
 
-					<div class="col-md-3">
-						<div class="panel panel-default">
-							<div class="panel-heading"><?= $row['kategori_minat']; ?></div>
-							<div class="panel-body">
-								<?php
-								$ada = explode(",",$minat['minat']);
+						<div class="col-md-3">
+							<div class="panel panel-default">
+								<div class="panel-heading"><?= $row['kategori_minat']; ?></div>
+								<div class="panel-body">
+									<?php
+									if ($minat) {
+										$ada =	explode(",", $minat['minat']);
+									}
 
-								foreach (get_sub_kategori_minat($row['id']) as $key=>$sub_minat) { ?>
-								<input name="minat[]" type="checkbox" value="<?= $sub_minat['id']; ?>"
-								
-								<?=(in_array($sub_minat['id'], $ada) ) ? "checked" : ""; ?> >
-								<?= $sub_minat['sub_kategori_minat']; ?> <br>
-								<?php } ?>
+									foreach (get_sub_kategori_minat($row['id']) as $key => $sub_minat) { ?>
+										<input name="minat[]" type="checkbox" value="<?= $sub_minat['id']; ?>" <?= ($minat) ? (in_array($sub_minat['id'], $ada)) ? "checked" : "" : ""; ?>>
+										<?= $sub_minat['sub_kategori_minat']; ?> <br>
+									<?php } ?>
+								</div>
 							</div>
 						</div>
-					</div>
 					<?php } ?>
 
 					<div class="form-group">
 						<div class="col-md-12">
-							<input type="submit" name="submit" value="Simpan"
-								class="btn btn-info pull-right">
+							<input type="submit" name="submit" value="Simpan" class="btn btn-info pull-right">
 						</div>
 					</div>
 
@@ -92,14 +91,12 @@
 </div>
 
 <script type="text/javascript">
-	$('#confirm-delete').on('show.bs.modal', function (e) {
+	$('#confirm-delete').on('show.bs.modal', function(e) {
 		$(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
 	});
-
 </script>
 
 <script>
 	$("#pribadi").addClass('active');
 	$("#pribadi .submenu_minat").addClass('active');
-
 </script>

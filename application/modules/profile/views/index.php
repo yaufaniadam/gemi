@@ -1,113 +1,114 @@
 <section class="content">
-
 	<div class="row">
-		<div class="col-md-3">
-
-			<!-- Profile Image -->
-			<div class="box box-primary">
-				<div class="box-body box-profile">
-					<?php if ($user['photo'] == '') { ?>
-
-						<img style="width:130px;height:auto;" class="profile-user-img img-responsive img-circle" src="<?= base_url(); ?>public/dist/img/user1-128x128.jpg" alt="User profile picture">
-
-					<?php } else { ?>
-
-						<img style="width:130px;height:auto;" class="profile-user-img img-responsive img-circle" src="<?= base_url($user['photo']); ?>">
-
-					<?php } ?>
-					<h3 class="profile-username text-center"><?= $user['firstname']; ?></h3>
-					<?php if ($penempatan) { ?>
-						<p class="text-muted text-center"><b><?= get_unit_kerja_by_id($penempatan['id_unit']); ?></b> di
-							Kantor <?= get_kantor_by_id($penempatan['id_kantor']); ?></p>
-					<?php } else { ?>
-						<p class="text-muted text-center">Belum ada Penempatan.<br> <a href="<?= base_url('/admin/users/tambah_penempatan'); ?>">Kelola Penempatan</a>.</p>
-					<?php } ?>
-
-				</div>
-				<!-- /.box-body -->
-			</div>
-			<!-- /.box -->
-
-			<?php if ($user['status'] == "Menikah") { ?>
-				<!-- About Me Box -->
-				<div class="box box-primary">
-					<div class="box-header with-border">
-						<h3 class="box-title"><i class="fa fa-child"></i> &nbsp; Anggota Keluarga</h3>
-					</div>
-					<!-- /.box-header -->
-					<div class="box-body" style="padding-top:0">
-
-						<ul class="list-group list-group-unbordered">
-
-
-							<?php foreach ($data_keluarga as $keluarga) { ?>
-								<?php if ($keluarga['status_keluarga'] != 'anak') { ?>
-
-									<li class="list-group-item"><b><?= $keluarga['nama_keluarga'] ?></b> <a class="pull-right">
-											<?php if ($keluarga['jenis_kelamin'] == "Perempuan") {
-												echo "Istri";
-											} else {
-												echo "Suami";
-											} ?>
-										</a></li>
-
-								<?php  } else { ?>
-									<li class="list-group-item"><b><?= $keluarga['nama_keluarga'] ?></b> <a class="pull-right">Anak
-											(<?= $keluarga['anak_ke'] ?>)</a> </li>
-								<?php }
-								?>
-							<?php } ?>
-
-						</ul>
-					</div>
-					<!-- /.box-body -->
-				</div>
-				<!-- /.box -->
-			<?php } ?>
-		</div>
-		<!-- /.col -->
-		<div class="col-md-9">
+		<div class="col-md-12">
 			<div class="box box-primary">
 				<div class="box-header with-border">
 					<h3 class="box-title"><i class="fa fa-id-card-o"></i> &nbsp; Profil Lengkap Pegawai</h3>
 				</div>
 				<div class="box-body" style="padding-top:0">
+					<div class="row">
+						<div class="col-md-3">
+							<!-- Profile Image -->
+							<div class="box box-primary">
+								<div class="box-body box-profile">
+									<?php if ($user['photo'] == '') { ?>
 
-					<table class="table table-striped table-bordered">
-						<tr>
-							<td width="200">Nama Lengkap</td>
-							<td><?= $user['firstname']; ?></td>
-						</tr>
-						<tr>
-							<td width="200">Jenis Kelamin</td>
-							<td><?= $user['jenis_kelamin']; ?></td>
-						</tr>
-						<tr>
-							<td width="200">Tempat / Tgl Lahir</td>
-							<td><?= $user['tempat_lahir']; ?> / <?= date_format(date_create($user['tgl_lahir']), 'j F Y'); ?></td>
-						</tr>
-						<tr>
-							<td width="200">Agama</td>
-							<td><?= $user['agama']; ?></td>
-						</tr>
-						<tr>
-							<td width="200">Status</td>
-							<td><?= $user['status']; ?></td>
-						</tr>
-						<tr>
-							<td width="200">Alamat</td>
-							<td><?= $user['alamat']; ?></td>
-						</tr>
-						<tr>
-							<td width="200">Email</td>
-							<td><?= $user['email']; ?></td>
-						</tr>
-						<tr>
-							<td width="200">No. HP</td>
-							<td><?= $user['mobile_no']; ?></td>
-						</tr>
+										<img style="width:130px;height:auto;" class="profile-user-img img-responsive img-circle" src="<?= base_url(); ?>public/dist/img/user1-128x128.jpg" alt="User profile picture">
 
-					</table>
+									<?php } else { ?>
+
+										<img style="width:130px;height:auto;" class="profile-user-img img-responsive img-circle" src="<?= base_url($user['photo']); ?>">
+
+									<?php } ?>
+									<h3 class="profile-username text-center"><?= $user['firstname']; ?></h3>
+									<?php if ($penempatan) { ?>
+										<p class="text-muted text-center"><b><?= get_unit_kerja_by_id($penempatan['id_unit']); ?></b> di
+											Kantor <?= get_kantor_by_id($penempatan['id_kantor']); ?></p>
+									<?php } else { ?>
+										<p class="text-muted text-center">Belum ada Penempatan.<br> <a href="<?= base_url('/admin/users/tambah_penempatan'); ?>">Kelola Penempatan</a>.</p>
+									<?php } ?>
+
+								</div>
+								<!-- /.box-body -->
+							</div>
+							<!-- /.box -->
+
+
+						</div>
+						<div class="col-md-6">
+							<table class="table table-striped table-bordered">
+								<tr>
+									<td width="200">Nama Lengkap</td>
+									<td><?= $user['firstname']; ?></td>
+								</tr>
+								<tr>
+									<td width="200">Jenis Kelamin</td>
+									<td><?= $user['jenis_kelamin']; ?></td>
+								</tr>
+								<tr>
+									<td width="200">Tempat / Tgl Lahir</td>
+									<td><?= $user['tempat_lahir']; ?> / <?= date_format(date_create($user['tgl_lahir']), 'j F Y'); ?></td>
+								</tr>
+								<tr>
+									<td width="200">Agama</td>
+									<td><?= $user['agama']; ?></td>
+								</tr>
+								<tr>
+									<td width="200">Status</td>
+									<td><?= $user['status']; ?></td>
+								</tr>
+								<tr>
+									<td width="200">Alamat</td>
+									<td><?= $user['alamat']; ?></td>
+								</tr>
+								<tr>
+									<td width="200">Email</td>
+									<td><?= $user['email']; ?></td>
+								</tr>
+								<tr>
+									<td width="200">No. HP</td>
+									<td><?= $user['mobile_no']; ?></td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-md-3">
+							<?php if ($user['status'] == "Kawin") { ?>
+								<!-- About Me Box -->
+								<div class="box box-primary">
+									<div class="box-header with-border">
+										<h3 class="box-title"><i class="fa fa-child"></i> &nbsp; Anggota Keluarga</h3>
+									</div>
+									<!-- /.box-header -->
+									<div class="box-body" style="padding-top:0">
+										<ul class="list-group list-group-unbordered">
+											<?php foreach ($data_keluarga as $keluarga) { ?>
+												<?php if ($keluarga['status_keluarga'] != 'anak') { ?>
+
+													<li class="list-group-item"><b><?= $keluarga['nama_keluarga'] ?></b> <a class="pull-right">
+															<?php if ($keluarga['jenis_kelamin'] == "Perempuan") {
+																echo "Istri";
+															} else {
+																echo "Suami";
+															} ?>
+														</a></li>
+
+												<?php  } else { ?>
+													<li class="list-group-item"><b><?= $keluarga['nama_keluarga'] ?></b> <a class="pull-right">Anak
+															(<?= $keluarga['anak_ke'] ?>)</a> </li>
+												<?php }
+												?>
+											<?php } ?>
+										</ul>
+									</div>
+									<!-- /.box-body -->
+								</div>
+								<!-- /.box -->
+							<?php } ?>
+						</div>
+
+					</div>
+
+
 
 				</div>
 			</div>
@@ -212,12 +213,14 @@
 								<div class="panel-heading"><?= $row['kategori_minat']; ?></div>
 								<div class="panel-body">
 									<?php
-									$ada = explode(",", $minat['minat']);
+									if ($minat) {
+										$ada =	explode(",", $minat['minat']);
+									}
 
 									foreach (get_sub_kategori_minat($row['id']) as $key => $sub_minat) { ?>
-										<input name="minat[]" type="checkbox" disabled="disabled" value="<?= $sub_minat['id']; ?>" <?= (in_array($sub_minat['id'], $ada)) ? "checked" : ""; ?>>
+										<input name="minat[]" type="checkbox" disabled="disabled" value="<?= $sub_minat['id']; ?>" <?= ($minat) ? (in_array($sub_minat['id'], $ada)) ? "checked" : "" : ''; ?>>
 										<?= $sub_minat['sub_kategori_minat']; ?> <br>
-									<?php } ?>
+									<?php }  ?>
 								</div>
 							</div>
 						</div>

@@ -43,8 +43,9 @@ class Individu extends MY_Controller
 		$this->load->view('admin/layout', $data);
 	}
 
-	public function din()
+	public function din($id = null)
 	{
+
 		if ($this->input->post('submit')) {
 			$this->form_validation->set_rules('sholat_awal_waktu', 'Frekuensi melaksanakan shalat wajib berjamaah di awal waktu', 'trim|required', array('required' => '<b>%s</b> wajib diisi'));
 			$this->form_validation->set_rules('jamaah_masjid', 'Frekuensi shalat berjamaah di masjid', 'trim|required', array('required' => '<b>%s</b> wajib diisi'));
@@ -74,15 +75,22 @@ class Individu extends MY_Controller
 
 
 				$data = $this->security->xss_clean($data);
-				$result = $this->individu_model->add_individu_din($data);
-
+				$id = $this->input->post('id');
+				if ($id) {
+					$result =  $this->individu_model->edit_individu_din($data, $id);
+				} else {
+					$result = $this->individu_model->add_individu_din($data);
+				}
 				if ($result) {
-					$this->session->set_flashdata('msg', 'Kinerja telah ditambahkan!');
-					redirect(base_url('kinerja/individu/din'));
+					$this->session->set_flashdata('msg', 'Data berhasil disimpan!');
+					redirect(base_url('kinerja/individu/din/' . $id));
 				}
 			}
 		} else {
-
+			if ($id) {
+				$data['din'] = $this->individu_model->get_individu_din_byid($id);
+				$data['id'] = $id;
+			}
 			$data['view'] = 'kinerja/din';
 			$this->load->view('admin/layout', $data);
 		}
@@ -94,8 +102,6 @@ class Individu extends MY_Controller
 		$this->session->set_flashdata('msg', 'Data berhasil dihapus!');
 		redirect(base_url('kinerja/individu/detail_din'));
 	}
-
-
 
 	public function detail_nafs($id = 0, $tahun = 0)
 	{
@@ -111,7 +117,7 @@ class Individu extends MY_Controller
 		$this->load->view('admin/layout', $data);
 	}
 
-	public function nafs()
+	public function nafs($id = null)
 	{
 
 		if ($this->input->post('submit')) {
@@ -132,19 +138,35 @@ class Individu extends MY_Controller
 					'date' => date('Y-m-d : h:m:s'),
 				);
 				$data = $this->security->xss_clean($data);
-				$result = $this->individu_model->add_individu_nafs($data);
-
+				$id = $this->input->post('id');
+				if ($id) {
+					$result =  $this->individu_model->edit_individu_nafs($data, $id);
+				} else {
+					$result = $this->individu_model->add_individu_nafs($data);
+				}
 				if ($result) {
-					$this->session->set_flashdata('msg', 'Kinerja telah ditambahkan!');
-					redirect(base_url('kinerja/individu/nafs'));
+					$this->session->set_flashdata('msg', 'Data berhasil disimpan!');
+					redirect(base_url('kinerja/individu/nafs/' . $id));
 				}
 			}
 		} else {
+			if ($id) {
+				$data['nafs'] = $this->individu_model->get_individu_nafs_byid($id);
+				$data['id'] = $id;
+			}
 			$data['individu_nafs'] = $this->individu_model->get_individu_nafs();
 			$data['view'] = 'kinerja/nafs';
 			$this->load->view('admin/layout', $data);
 		}
 	} //nafs
+
+
+	public function hapus_nafs($id = 0)
+	{
+		$this->db->delete('ci_individu_nafs', array('id' => $id));
+		$this->session->set_flashdata('msg', 'Data berhasil dihapus!');
+		redirect(base_url('kinerja/individu/detail_nafs'));
+	}
 
 	public function detail_aql($id = 0, $tahun = 0)
 	{
@@ -160,7 +182,7 @@ class Individu extends MY_Controller
 		$data['view'] = 'kinerja/detail_aql';
 		$this->load->view('admin/layout', $data);
 	}
-	public function aql()
+	public function aql($id = 0)
 	{
 
 		if ($this->input->post('submit')) {
@@ -173,7 +195,10 @@ class Individu extends MY_Controller
 
 
 			if ($this->form_validation->run() == FALSE) {
-				//$data['individu_aql'] = $this->individu_model->get_individu_aql();
+				if ($id) {
+					$data['aql'] = $this->individu_model->get_individu_aql_byid($id);
+					$data['id'] = $id;
+				}
 				$data['view'] = 'kinerja/aql';
 				$this->load->view('admin/layout', $data);
 			} else {
@@ -188,14 +213,18 @@ class Individu extends MY_Controller
 					'date' => date('Y-m-d : h:m:s'),
 				);
 
-
+				$id = $this->input->post('id');
 
 				$data = $this->security->xss_clean($data);
-				$result = $this->individu_model->add_individu_aql($data);
 
+				if ($id) {
+					$result =  $this->individu_model->edit_individu_aql($data, $id);
+				} else {
+					$result = $this->individu_model->add_individu_aql($data);
+				}
 				if ($result) {
-					$this->session->set_flashdata('msg', 'Kinerja telah ditambahkan!');
-					redirect(base_url('kinerja/individu/aql'));
+					$this->session->set_flashdata('msg', 'Data berhasil disimpan!');
+					redirect(base_url('kinerja/individu/aql/' . $id));
 				}
 			}
 		} else if ($this->input->post('submit-usulan')) {
@@ -207,7 +236,10 @@ class Individu extends MY_Controller
 
 
 			if ($this->form_validation->run() == FALSE) {
-				//$data['individu_aql'] = $this->individu_model->get_individu_aql();
+				if ($id) {
+					$data['aql'] = $this->individu_model->get_individu_aql_byid($id);
+					$data['id'] = $id;
+				}
 				$data['view'] = 'kinerja/aql';
 				$this->load->view('admin/layout', $data);
 			} else {
@@ -220,22 +252,35 @@ class Individu extends MY_Controller
 					'date' => date('Y-m-d : h:m:s'),
 				);
 
-
+				$id = $this->input->post('id');
 				$data = $this->security->xss_clean($data);
-				$result = $this->individu_model->add_individu_aql($data);
 
+				if ($id) {
+					$result =  $this->individu_model->edit_individu_aql($data, $id);
+				} else {
+					$result = $this->individu_model->add_individu_aql($data);
+				}
 				if ($result) {
-					$this->session->set_flashdata('msg', 'Kinerja telah ditambahkan!');
-					redirect(base_url('kinerja/individu/aql'));
+					$this->session->set_flashdata('msg', 'Data berhasil disimpan!');
+					redirect(base_url('kinerja/individu/aql/' . $id));
 				}
 			}
 		} else {
-			//$data['individu_aql'] = $this->individu_model->get_individu_aql();
+			if ($id) {
+				$data['aql'] = $this->individu_model->get_individu_aql_byid($id);
+				$data['id'] = $id;
+			}
 			$data['view'] = 'kinerja/aql';
 			$this->load->view('admin/layout', $data);
 		}
 	} //aql
 
+	public function hapus_aql($id = 0)
+	{
+		$this->db->delete('ci_individu_aql', array('id' => $id));
+		$this->session->set_flashdata('msg', 'Data berhasil dihapus!');
+		redirect(base_url('kinerja/individu/detail_aql'));
+	}
 
 	public function detail_nasl($id = 0, $tahun = 0)
 	{
@@ -252,7 +297,7 @@ class Individu extends MY_Controller
 		$this->load->view('admin/layout', $data);
 	}
 
-	public function nasl()
+	public function nasl($id = 0)
 	{
 
 		if ($this->input->post('submit')) {
@@ -260,7 +305,10 @@ class Individu extends MY_Controller
 			$this->form_validation->set_rules('partisipasi_keluarga', 'Partisipasi keluarga besar di kegiatan BMT ', 'trim|required', array('required' => '<b>%s</b> wajib diisi'));
 
 			if ($this->form_validation->run() == FALSE) {
-				$data['individu_nasl'] = $this->individu_model->get_individu_nasl();
+				if ($id) {
+					$data['individu_nasl'] = $this->individu_model->get_individu_nasl_byid($id);
+					$data['id'] = $id;
+				}
 				$data['anak'] = $this->user_model->get_anak();
 				$data['view'] = 'kinerja/nasl';
 				$this->load->view('admin/layout', $data);
@@ -275,21 +323,37 @@ class Individu extends MY_Controller
 					'date' => date('Y-m-d : h:m:s'),
 				);
 
+				$id = $this->input->post('id');
 				$data = $this->security->xss_clean($data);
-				$result = $this->individu_model->add_individu_nasl($data);
 
+				if ($id) {
+					$result =  $this->individu_model->edit_individu_nasl($data, $id);
+				} else {
+					$result = $this->individu_model->add_individu_nasl($data);
+				}
 				if ($result) {
-					$this->session->set_flashdata('msg', 'Kinerja telah ditambahkan!');
-					redirect(base_url('kinerja/individu/detail_nasl'));
+					$this->session->set_flashdata('msg', 'Data berhasil disimpan!');
+					redirect(base_url('kinerja/individu/nasl/' . $id));
 				}
 			}
 		} else {
-			$data['individu_nasl'] = $this->individu_model->get_individu_nasl();
+			if ($id) {
+				$data['individu_nasl'] = $this->individu_model->get_individu_nasl_byid($id);
+				$data['id'] = $id;
+			}
+
 			$data['anak'] = $this->user_model->get_anak();
 			$data['view'] = 'kinerja/nasl';
 			$this->load->view('admin/layout', $data);
 		}
 	} //nasl
+
+	public function hapus_nasl($id = 0)
+	{
+		$this->db->delete('ci_individu_nasl', array('id' => $id));
+		$this->session->set_flashdata('msg', 'Data berhasil dihapus!');
+		redirect(base_url('kinerja/individu/detail_nasl'));
+	}
 
 	public function detail_mal($id = 0, $tahun = 0)
 	{
@@ -304,7 +368,7 @@ class Individu extends MY_Controller
 		$this->load->view('admin/layout', $data);
 	}
 
-	public function mal()
+	public function mal($id = 0)
 	{
 		if ($this->input->post('submit')) {
 			$this->form_validation->set_rules('saving', 'Jumlah saving', 'trim|required', array('required' => '<b>%s</b> wajib diisi'));
@@ -312,7 +376,10 @@ class Individu extends MY_Controller
 			$this->form_validation->set_rules('tempat_hutang', 'Lembaga tempat berhutang', 'trim|required', array('required' => '<b>%s</b> wajib diisi'));
 
 			if ($this->form_validation->run() == FALSE) {
-				$data['individu_mal'] = $this->individu_model->get_individu_mal();
+				if ($id) {
+					$data['mal'] = $this->individu_model->get_individu_mal_byid($id);
+					$data['id'] = $id;
+				}
 				$data['view'] = 'kinerja/mal';
 				$this->load->view('admin/layout', $data);
 			} else {
@@ -326,20 +393,36 @@ class Individu extends MY_Controller
 					'date' => date('Y-m-d : h:m:s'),
 				);
 
+				$id = $this->input->post('id');
 				$data = $this->security->xss_clean($data);
-				$result = $this->individu_model->add_individu_mal($data);
 
+				if ($id) {
+					$result =  $this->individu_model->edit_individu_mal($data, $id);
+				} else {
+					$result = $this->individu_model->add_individu_mal($data);
+				}
 				if ($result) {
-					$this->session->set_flashdata('msg', 'Kinerja telah ditambahkan!');
-					redirect(base_url('kinerja/individu/mal'));
+					$this->session->set_flashdata('msg', 'Data berhasil disimpan!');
+					redirect(base_url('kinerja/individu/mal/' . $id));
 				}
 			}
 		} else {
-			$data['individu_mal'] = $this->individu_model->get_individu_mal();
+			if ($id) {
+				$data['mal'] = $this->individu_model->get_individu_mal_byid($id);
+				$data['id'] = $id;
+			}
+
 			$data['view'] = 'kinerja/mal';
 			$this->load->view('admin/layout', $data);
 		}
 	} //mal
+
+	public function hapus_mal($id = 0)
+	{
+		$this->db->delete('ci_individu_mal', array('id' => $id));
+		$this->session->set_flashdata('msg', 'Data berhasil dihapus!');
+		redirect(base_url('kinerja/individu/detail_mal'));
+	}
 
 	public function tambah_raport()
 	{
@@ -383,7 +466,7 @@ class Individu extends MY_Controller
 			$result = $this->individu_model->add_raport($data);
 
 			if ($result) {
-				$this->session->set_flashdata('msg', 'Kinerja telah ditambahkan!');
+				$this->session->set_flashdata('msg', 'Data berhasil disimpan!');
 				redirect(base_url('kinerja/individu/detail_nasl'));
 			}
 

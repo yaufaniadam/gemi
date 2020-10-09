@@ -12,6 +12,33 @@ class Individu_model extends CI_Model
 		return $this->db->insert('ci_individu_din', $data);
 	}
 
+	public function edit_individu_din($data, $id)
+	{
+		$this->db->where('id', $id);
+		return	$this->db->update('ci_individu_din', $data);
+	}
+	public function edit_individu_aql($data, $id)
+	{
+		$this->db->where('id', $id);
+		return	$this->db->update('ci_individu_aql', $data);
+	}
+	public function edit_individu_mal($data, $id)
+	{
+		$this->db->where('id', $id);
+		return	$this->db->update('ci_individu_mal', $data);
+	}
+	public function edit_individu_nasl($data, $id)
+	{
+		$this->db->where('id', $id);
+		return	$this->db->update('ci_individu_nasl', $data);
+	}
+	public function edit_individu_nafs($data, $id)
+	{
+		$this->db->where('id', $id);
+		return	$this->db->update('ci_individu_nafs', $data);
+	}
+
+
 	public function get_individu_din($id = 0, $tahun = 0)
 	{
 		$query = $this->db->query('select periode_bln as Bulan,id, 
@@ -43,6 +70,31 @@ class Individu_model extends CI_Model
 		$query = $this->db->query('select periode_thn from ci_individu_din where user_id=' . $id . ' group by periode_thn order by periode_thn  ASC ');
 		return $result = $query->result_array();
 	}
+	public function get_individu_din_byid($id)
+	{
+		$query = $this->db->query('select * from ci_individu_din where id=' . $id);
+		return $result = $query->row_array();
+	}
+	public function get_individu_nafs_byid($id)
+	{
+		$query = $this->db->query('select * from ci_individu_nafs where id=' . $id);
+		return $result = $query->row_array();
+	}
+	public function get_individu_aql_byid($id)
+	{
+		$query = $this->db->query('select * from ci_individu_aql where id=' . $id);
+		return $result = $query->row_array();
+	}
+	public function get_individu_nasl_byid($id)
+	{
+		$query = $this->db->query('select * from ci_individu_nasl where id=' . $id);
+		return $result = $query->row_array();
+	}
+	public function get_individu_mal_byid($id)
+	{
+		$query = $this->db->query('select * from ci_individu_mal where id=' . $id);
+		return $result = $query->row_array();
+	}
 
 	public function add_individu_nafs($data)
 	{
@@ -56,7 +108,7 @@ class Individu_model extends CI_Model
 
 	public function get_individu_nafs($id = 0, $tahun = 0)
 	{
-		$query = $this->db->query('select periode_bln as Bulan, 
+		$query = $this->db->query('select periode_bln as Bulan, id,
 					olah_raga as "Olah Raga (kali/bln)",
 					tepat_waktu as "Tepat Waktu (kali/bln)"
 					
@@ -115,7 +167,7 @@ class Individu_model extends CI_Model
 
 	public function get_individu_nasl($id = 0, $tahun = 0)
 	{
-		$query = $this->db->query('select periode_bln as Bulan, 
+		$query = $this->db->query('select periode_bln as Bulan, id,
 					kesehatan_keluarga as "Jumlah hari anggota keluarga yang sakit dalam sebulan dan sembuh",
 					partisipasi_keluarga as "Partisipasi keluarga besar di kegiatan BMT"					
 					from ci_individu_nasl where user_id=' . $id . ' and periode_thn=' . $tahun . ' order by periode_bln ASC');
@@ -143,18 +195,15 @@ class Individu_model extends CI_Model
 		$id = $this->session->userdata('user_id');
 		$query = $this->db->get_where('ci_individu_mal', array('user_id' => $id));
 
-		if ($query->row_array()) {
-			$this->db->update('ci_individu_mal', $data);
-		} else {
-			$this->db->insert('ci_individu_mal', $data);
-		}
+		$this->db->insert('ci_individu_mal', $data);
+
 
 		return true;
 	}
 
 	public function get_individu_mal($id = 0, $tahun = 0)
 	{
-		$query = $this->db->query('select periode_bln as Bulan, 
+		$query = $this->db->query('select periode_bln as Bulan,  id,
 					saving as "Jumlah Tabungan Pendidikan Anak",
 					hutang as "Jumlah Hutang jika ada",	
 					tempat_hutang as "Lembaga tempat berhutang"			

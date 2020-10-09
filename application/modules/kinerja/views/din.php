@@ -21,20 +21,21 @@
 						</div>
 					<?php endif; ?>
 
-					<?php echo form_open(base_url('kinerja/individu/din'), 'class="form-horizontal"') ?>
 
+					<?php echo form_open(base_url('kinerja/individu/din'), 'class="form-horizontal"') ?>
+					<input type="hidden" name="id" value="<?= (isset($id) ? $id : ''); ?>">
 					<div class="form-group">
 						<label for="periode" class="col-sm-6 control-label">Periode</label>
 						<div class="col-sm-5">
 							<div class="row">
-								<div class="col-sm-6">
+								<div class="col-xs-6">
 									<div class="input-group">
-										<?php option_bulan(); ?>
+										<?php option_bulan((isset($id) ? $id : ''), (isset($din)) ? $din['periode_bln'] : ''); ?>
 									</div>
 								</div>
-								<div class="col-sm-6">
+								<div class="col-xs-6">
 									<div class="input-group">
-										<?php option_tahun(); ?>
+										<?php option_tahun((isset($id) ? $id : ''), (isset($din)) ? $din['periode_thn'] : ''); ?>
 									</div>
 								</div>
 							</div>
@@ -42,14 +43,13 @@
 					</div>
 
 					<div class="form-group">
+
 						<label for="nama_prodi" class="col-sm-6 control-label">Frekuensi melaksanakan shalat wajib
 							berjamaah di awal
 							waktu</label>
 						<div class="col-sm-3">
 							<div class="input-group">
-								<input type="text" name="sholat_awal_waktu" class="form-control" value="<?php if (validation_errors()) {
-																											echo set_value('sholat_awal_waktu');
-																										}  ?>" placeholder="">
+								<input type="text" name="sholat_awal_waktu" class="form-control" value="<?= (validation_errors()) ?  set_value('sholat_awal_waktu') : ((isset($din)) ? $din['sholat_awal_waktu'] : "");  ?>" placeholder="">
 								<span class="input-group-addon"> / hari</span>
 							</div>
 						</div>
@@ -60,9 +60,7 @@
 							masjid</label>
 						<div class="col-sm-3">
 							<div class="input-group">
-								<input type="number" name="jamaah_masjid" class="form-control" value="<?php if (validation_errors()) {
-																											echo set_value('jamaah_masjid');
-																										}   ?>"><span class="input-group-addon" min="1" max="5"> / hari</span>
+								<input type="number" name="jamaah_masjid" class="form-control" value="<?= (validation_errors()) ?  set_value('jamaah_masjid') : ((isset($din)) ? $din['jamaah_masjid'] : "");  ?>"><span class="input-group-addon" min="1" max="5"> / hari</span>
 							</div>
 						</div>
 					</div>
@@ -71,9 +69,7 @@
 						<label for="nama_prodi" class="col-sm-6 control-label">Jumlah halaman tilawah qur’an</label>
 						<div class="col-sm-3">
 							<div class="input-group">
-								<input type="number" name="tilawah_quran" class="form-control" value="<?php if (validation_errors()) {
-																											echo set_value('tilawah_quran');
-																										}  ?>"><span class="input-group-addon" min="1" max="500"> / bulan</span>
+								<input type="number" name="tilawah_quran" class="form-control" value="<?= (validation_errors()) ?  set_value('tilawah_quran') : ((isset($din)) ? $din['tilawah_quran'] : "");  ?>"><span class="input-group-addon" min="1" max="500"> / bulan</span>
 							</div>
 						</div>
 					</div>
@@ -83,9 +79,7 @@
 						<label for="nama_prodi" class="col-sm-6 control-label">Frekuensi shalat tahajjud</label>
 						<div class="col-sm-3">
 							<div class="input-group">
-								<input type="number" name="tahajjud" class="form-control" value="<?php if (validation_errors()) {
-																										echo set_value('tahajjud');
-																									} ?>"><span class="input-group-addon" min="1" max="30"> / bulan</span>
+								<input type="number" name="tahajjud" class="form-control" value="<?= (validation_errors()) ?  set_value('tahajjud') : ((isset($din)) ? $din['tahajjud'] : "");  ?>"><span class="input-group-addon" min="1" max="30"> / bulan</span>
 							</div>
 						</div>
 					</div>
@@ -94,9 +88,7 @@
 						<label for="nama_prodi" class="col-sm-6 control-label">Puasa sunnah Senin Kamis</label>
 						<div class="col-sm-3">
 							<div class="input-group">
-								<input type="number" name="puasa_sunnah" class="form-control" value="<?php if (validation_errors()) {
-																											echo set_value('puasa_sunnah');
-																										} ?>"><span class="input-group-addon" min="1" max="8"> / bulan</span>
+								<input type="number" name="puasa_sunnah" class="form-control" value="<?= (validation_errors()) ?  set_value('puasa_sunnah') : ((isset($din)) ? $din['puasa_sunnah'] : "");  ?>"><span class="input-group-addon" min="1" max="8"> / bulan</span>
 							</div>
 						</div>
 					</div>
@@ -105,9 +97,7 @@
 						<label for="nama_prodi" class="col-sm-6 control-label">Shalat dhuha sebelum beraktivitas</label>
 						<div class="col-sm-3">
 							<div class="input-group">
-								<input type="number" name="dhuha" class="form-control" value="<?php if (validation_errors()) {
-																									echo set_value('dhuha');
-																								} ?>"><span class="input-group-addon" min="1" max="30">
+								<input type="number" name="dhuha" class="form-control" value="<?= (validation_errors()) ?  set_value('dhuha') : ((isset($din)) ? $din['dhuha'] : "");  ?>"><span class="input-group-addon" min="1" max="30">
 									/ bulan</span>
 							</div>
 						</div>
