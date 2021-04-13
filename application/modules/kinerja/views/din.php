@@ -69,7 +69,7 @@
 						<label for="nama_prodi" class="col-sm-6 control-label">Jumlah halaman tilawah qur’an</label>
 						<div class="col-sm-3">
 							<div class="input-group">
-								<input type="number" name="tilawah_quran" class="form-control" value="<?= (validation_errors()) ?  set_value('tilawah_quran') : ((isset($din)) ? $din['tilawah_quran'] : "");  ?>"><span class="input-group-addon" min="1" max="500"> / bulan</span>
+								<input type="number" name="tilawah_quran" class="form-control" value="<?= (validation_errors()) ?  set_value('tilawah_quran') : ((isset($din)) ? $din['tilawah_quran'] : "");  ?>"><span class="input-group-addon" min="1" max="500"> / minggu</span>
 							</div>
 						</div>
 					</div>
@@ -79,7 +79,7 @@
 						<label for="nama_prodi" class="col-sm-6 control-label">Frekuensi shalat tahajjud</label>
 						<div class="col-sm-3">
 							<div class="input-group">
-								<input type="number" name="tahajjud" class="form-control" value="<?= (validation_errors()) ?  set_value('tahajjud') : ((isset($din)) ? $din['tahajjud'] : "");  ?>"><span class="input-group-addon" min="1" max="30"> / bulan</span>
+								<input type="number" name="tahajjud" class="form-control" value="<?= (validation_errors()) ?  set_value('tahajjud') : ((isset($din)) ? $din['tahajjud'] : "");  ?>"><span class="input-group-addon" min="1" max="30"> / minggu</span>
 							</div>
 						</div>
 					</div>
@@ -88,7 +88,7 @@
 						<label for="nama_prodi" class="col-sm-6 control-label">Puasa sunnah Senin Kamis</label>
 						<div class="col-sm-3">
 							<div class="input-group">
-								<input type="number" name="puasa_sunnah" class="form-control" value="<?= (validation_errors()) ?  set_value('puasa_sunnah') : ((isset($din)) ? $din['puasa_sunnah'] : "");  ?>"><span class="input-group-addon" min="1" max="8"> / bulan</span>
+								<input type="number" name="puasa_sunnah" class="form-control" value="<?= (validation_errors()) ?  set_value('puasa_sunnah') : ((isset($din)) ? $din['puasa_sunnah'] : "");  ?>"><span class="input-group-addon" min="1" max="8"> / minggu</span>
 							</div>
 						</div>
 					</div>
@@ -98,7 +98,7 @@
 						<div class="col-sm-3">
 							<div class="input-group">
 								<input type="number" name="dhuha" class="form-control" value="<?= (validation_errors()) ?  set_value('dhuha') : ((isset($din)) ? $din['dhuha'] : "");  ?>"><span class="input-group-addon" min="1" max="30">
-									/ bulan</span>
+									/ minggu</span>
 							</div>
 						</div>
 					</div>
